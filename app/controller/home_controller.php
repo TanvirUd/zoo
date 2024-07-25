@@ -21,7 +21,7 @@ class HomeCtrl extends MotherCtrl
             foreach($roleApplicatifs as $roleApplicatif) {
                 require_once("./app/entity/roleApplicatif_entity.php");
                 $roleAppEntity = new RoleApplicatif();
-                $roleAppEntity->hydrate = $roleApplicatif;  
+                $roleAppEntity->hydrate($roleApplicatif);  
                 $roleAppEntities[] = $roleAppEntity;            
             }
 

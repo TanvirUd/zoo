@@ -1,5 +1,7 @@
 <?php
-class Personnel {
+require_once("mother_entity.php");
+
+class Personnel extends Entity {
     private string $numMatriculePerso;
     private string $melPerso;
     private string $mdpPerso;
