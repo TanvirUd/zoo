@@ -116,7 +116,7 @@ class PersonnelCtrl extends MotherCtrl
             $this->_data['errors'] = $errors;
         }
 
-        $this->_data['page'] = 'connexion';
+        $this->_data['page'] = 'login';
         $this->render();
     }
 
