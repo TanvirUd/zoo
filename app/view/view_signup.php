@@ -5,7 +5,7 @@
         <p><small>Veuillez remplir tous les champs</small></p>
         <div class="col-md-4">
             <label for="prenom_perso_signup" class="form-label">Prénom</label>
-            <input type="text" class="form-control" id="prenom_perso_signup" name="prenom_perso_signup" value="<?php echo $prenom?>" required>
+            <input type="text" class="form-control" id="prenom_perso_signup" name="prenom_perso_signup" value="<?php echo $prenom ?>" required>
         </div>
 
         <div class="col-md-4">

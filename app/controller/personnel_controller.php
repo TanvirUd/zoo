@@ -17,6 +17,15 @@ class PersonnelCtrl extends MotherCtrl
         $adresse = $_POST['adresse_perso_signup']??'';
         $tel = $_POST['tel_perso_signup']??'';
 
+        $this->_data['email'] = $email;
+        $this->_data['mdp'] = $mdp;
+        $this->_data['verifMdp'] = $verifMdp;
+        $this->_data['nom'] = $nom;
+        $this->_data['prenom'] = $prenom;
+        $this->_data['dateNaissance'] = $dateNaissance;
+        $this->_data['adresse'] = $adresse;
+        $this->_data['tel'] = $tel;
+
         if(count($_POST) > 0) {
             if($email == ""){
                 $errors[] = "Veuillez entrer votre adresse email";
