@@ -71,8 +71,8 @@ class PersonnelModel extends PdoModel
         $result = $this->_db->prepare($sql);
         $result->bindValue(":melPerso", $melPerso, PDO::PARAM_STR);
         $result->execute();
-        $user = $result->fetch();
-        return $user != false;
+        $personnel = $result->fetch();
+        return $personnel != false;
     }
 
     public function updatePersonnel(){
@@ -147,7 +147,7 @@ class PersonnelModel extends PdoModel
                 $result->bindParam(":numMatriculePersoUpdate", $numMatriculePersoUpdate, PDO::PARAM_STR);
                 $_SESSION[''] = $numMatriculePersoUpdate; //insérer contenu form
             }
-            if($melPerso != "" && !$this->checkEmailExist($melPerso)){
+            if($melPerso != "" && !$this->checkIfMelExist($melPerso)){
                 $result->bindParam(":melPerso", $melPerso, PDO::PARAM_STR);
                 $_SESSION[''] = $melPerso; //insérer contenu form
             }
