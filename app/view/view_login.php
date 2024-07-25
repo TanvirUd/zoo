@@ -2,6 +2,16 @@
   <div class="card">
     <div class="card-body">
       <h2 class="card-title text-center mb-4">Connexion</h2>
+      
+      <!-- affichage message d'erreur -->
+      <?php
+            if (isset($error)) 
+            {
+            echo '<div class="alert alert-danger" role="alert">';
+            echo $error;
+            echo '</div>';
+            }
+        ?>
 
       <!-- afficher le formulaire -->
       <form action="connexion" method="post">

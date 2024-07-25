@@ -7,7 +7,7 @@
                 <div class="col-md-6 offset-md-3 col-sm-12">
                     <div class="input-group">
                       <label for="search" class="input-group-text">Chercher</label>
-                        <input type="search" class="form-control" placeholder="Rechercher un rôle...">
+                        <input type="search" class="form-control" id="search" placeholder="Rechercher un rôle...">
                     </div>
                 </div>
 
@@ -31,6 +31,7 @@
                     </thead>
                     <!-- ELEMENTS A DYNAMISER -->
                     <!-- corps du tableau -->
+                    <tbody>
                     <!-- éléments du corps -->
                       <tr>
                         <th scope="row " >animaux_coordinateur</th>
@@ -61,9 +62,20 @@
                           <input class="btn btn-danger fw-bold" type="submit" value="Supprimer">
                         </td>
                       </tr>
-                      
-                      
 
+
+                      <?php foreach ($roleApplicatifs as $role) : ?>
+                        <tr>
+                            <th scope="row"><?php echo htmlspecialchars($role['idAppli']); ?></th>
+                            <td><?php echo htmlspecialchars($role['idRoleAppli']); ?></td>
+                            <td><?php echo htmlspecialchars($role['bdd']); ?></td>
+                            <td>
+                                <button class="btn btn-primary fw-bold" type="button">Modifier</button>
+                                <button class="btn btn-danger fw-bold" type="button">Supprimer</button>
+                            </td>
+                        </tr>
+                      <?php endforeach; ?>
+                      
                     </tbody>
                 </table>
             </div>
