@@ -18,7 +18,7 @@ class MotherCtrl
             $$key = $value;
         }
  
-        // require("../app/view/header.php");
+        require("../app/view/partials/header.php");
 
         $pageLocate = "../app/view/view_" . $page . ".php";
         if(file_exists($pageLocate)){
@@ -27,6 +27,6 @@ class MotherCtrl
             require("../app/view/404.php");
         }
 
-        // require("../app/view/footer.php");
+        require("../app/view/partials/footer.php");
     }
 }
