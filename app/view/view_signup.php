@@ -1,8 +1,8 @@
 <?php require_once('partials/header.php') ?>
 
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
-    <form class="row g-3 bg-dark text-light p-5">
-        <h2 class="card-title text-center mb-4">Créer un compte</h2>
+    <form class="row g-3 bg-light p-5">
+        <h2 class="text-center mb-4">Créer un compte</h2>
         <p><small>Veuillez remplir tous les champs</small></p>
         <div class="col-md-4">
             <label for="prenom_perso_signup" class="form-label">Prénom</label>
