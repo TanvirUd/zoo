@@ -1,13 +1,17 @@
 <?php
-require_once("../app/model/pdo_model.php");
+require_once('pdo_model.php');
 
 class estHabiliteModel extends PdoModel
 {
-    public function getHabilitesById(string $numMatriculePerso) {
+    public function getHabilitesByMatricule(string $numMatriculePerso) {
         try {
-            $sqlQuery="";
+            $sqlQuery="SELECT estHabilite.idAppli, estHabilite.idRoleAppli, roleApplicatif.mdpRoleAppli 
+                        FROM EstHabilite INNER JOIN roleApplicatif 
+                        ON estHabilite.idAppli = roleApplicatif.idAppli 
+                        AND estHabilite.idRoleAppli = roleApplicatif.idRoleAppli
+                        WHERE estHabilite.numMatriculePerso=:numMatriculePerso";
             $stmt = $this->_db->prepare($sqlQuery);
-            $stmt->bindParam();
+            $stmt->bindParam(':numMatriculePerso', $numMatriculePerso, PDO::PARAM_STR);
             $stmt->execute();
 
             //retourner tous les résultats
@@ -19,6 +23,24 @@ class estHabiliteModel extends PdoModel
         }
     }
 
+    public function updateHabilitesPourPersonnel(string $numMatriculePerso) {
+        try {
+            $sqlQuery="UPDATE INTO estHabilite (numMatriculePerso, idAppli, idRoleAppli)
+            VALUES(:numMatriculePerso, :idAppli, :idRoleAppli)";
+            $stmt = $this->_db->prepare($sqlQuery);
+            $stmt->bindParam(':numMatriculePerso', $numMatriculePerso, PDO::PARAM_STR);
+            $stmt->bindParam(':idAppli', $idAppli, PDO::PARAM_INT);
+            $stmt->bindParam(':idRoleAppli', $idRoleAppli, PDO::PARAM_INT);
+            $stmt->execute();
+
+            //retourner tous les résultats
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            throw new Exception("Une erreur s'est produite");
+        }
+    }
 
     public function assignHabilitesPourPersonnel($numMatriculePerso, $idRole)
     {
