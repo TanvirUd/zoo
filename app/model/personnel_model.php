@@ -75,7 +75,10 @@ class PersonnelModel extends PdoModel
         return $user != false;
     }
 
-    public function connectPersonnel($melPerso, $mdpPerso){
+    public function connectPersonnel(){
+        $melPerso = $_POST['email']; //insérer contenu form
+        $mdpPerso = $_POST['signup-password']; //insérer contenu form
+
         $sql = "SELECT * FROM user WHERE melPerso=:melPerso";
         $result = $this->_db->prepare($sql);
         $result->bindValue(":melPerso", $melPerso, PDO::PARAM_STR);

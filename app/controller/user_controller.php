@@ -83,7 +83,7 @@ class UserCtrl extends MotherCtrl
                     if($personnelModel->connectPersonnel()) {
                         require_once("../app/Entity/personnel_entity.php");
                         $personnel = new Personnel();
-                        $personnel->hydrate = $personnelModel;
+                        $personnel->hydrate($personnelModel);
 
                         $_SESSION['matricule'] = $personnel->getNumMatriculePerso();
                         $_SESSION['nom'] = $personnel->getNomPerso();
