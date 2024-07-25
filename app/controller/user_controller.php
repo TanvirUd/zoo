@@ -37,7 +37,7 @@ class UserCtrl extends MotherCtrl
             if(count($errors) == 0) {
                 require_once("../app/Model/personnel_model.php");
                 $personnelModel = new PersonnelModel();
-                if($personnelModel->checkEmail($email)) {
+                if($personnelModel->checkIfMelExist($email)) {
                     $errors[] = "Cet email est déjà utilisé";
                 }
 
@@ -75,14 +75,14 @@ class UserCtrl extends MotherCtrl
                 require_once("../app/Model/personnel_model.php");
                 $personnelModel = new PersonnelModel();
 
-                if(!$personnelModel->checkEmail($email)) {
+                if(!$personnelModel->checkIfMelExist($email)) {
                     $errors[] = "Cet email n'existe pas";
                 }
 
                 if(count($errors) == 0) {
-                    if($personnelModel->connect()) {
+                    if($personnelModel->connectPersonnel()) {
                         require_once("../app/Entity/personnel_entity.php");
-                        $personnel = new Personel();
+                        $personnel = new Personnel();
                         $personnel->hydrate = $personnelModel;
 
                         $_SESSION['matricule'] = $personnel->getNumMatriculePerso();
