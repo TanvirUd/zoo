@@ -8,14 +8,14 @@ class UserCtrl extends MotherCtrl
         $this->_data['title'] = 'Inscription';
         $errors = array();
 
-        $email = $_POST['melPerso']??'';
-        $mdp = $_POST['mdpPerso']??'';
+        $email = $_POST['mel_perso_signup']??'';
+        $mdp = $_POST['mdp_perso_signup']??'';
         $verifMdp = $_POST['verifMdpPerso']??'';
-        $nom = $_POST['nomPerso']??'';
-        $prenom = $_POST['prenomPerso']??'';
-        $dateNaissance = $_POST['dateNaissancePerso']??'';
-        $adresse = $_POST['adressePerso']??'';
-        $tel = $_POST['telPerso']??'';
+        $nom = $_POST['nom_perso_signup']??'';
+        $prenom = $_POST['prenom_perso_signup']??'';
+        $dateNaissance = $_POST['date_naissance_perso_signup']??'';
+        $adresse = $_POST['adresse_perso_signup']??'';
+        $tel = $_POST['tel_perso_signup']??'';
 
         if(count($_POST) > 0) {
             if($email == ""){
