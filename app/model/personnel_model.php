@@ -1,5 +1,5 @@
 <?php
-require_once("pdo_model.php");
+require_once("../app/model/pdo_model.php");
 class PersonnelModel extends PdoModel
 {
     public function createPersonnel(){
@@ -76,10 +76,10 @@ class PersonnelModel extends PdoModel
     }
 
     public function connectPersonnel(){
-        $melPerso = $_POST['email']; //insérer contenu form
-        $mdpPerso = $_POST['signup-password']; //insérer contenu form
+        $melPerso = $_POST['melPerso']; //insérer contenu form
+        $mdpPerso = $_POST['mdpPerso']; //insérer contenu form
 
-        $sql = "SELECT * FROM user WHERE melPerso=:melPerso";
+        $sql = "SELECT * FROM Personnel WHERE melPerso=:melPerso";
         $result = $this->_db->prepare($sql);
         $result->bindValue(":melPerso", $melPerso, PDO::PARAM_STR);
         $result->execute();
@@ -89,6 +89,8 @@ class PersonnelModel extends PdoModel
             unset($user['mdpPerso']);
             return $user;
         }
+
+        return false;
     }
 
     public function updatePersonnel(){

@@ -1,5 +1,6 @@
 <?php
-require_once('mother_controller.php');
+require_once('../app/controller/mother_controller.php');
+
 class HomeCtrl extends MotherCtrl
 {
     /**

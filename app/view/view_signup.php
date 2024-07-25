@@ -1,6 +1,6 @@
 
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
-    <form class="row g-3 bg-light p-5" action="inscription" method="post">
+    <form class="row g-3 bg-light p-5" action="index.php?controller=personnel&action=inscription" method="post">
         <h2 class="text-center mb-4">Créer un compte</h2>
         <p><small>Veuillez remplir tous les champs</small></p>
         <div class="col-md-4">
@@ -15,24 +15,24 @@
 
         
         <div class="col-md-4">
-            <label for="telephone_perso_signup" class="form-label">Numéro de téléphone</label>
-            <input type="tel" class="form-control" id="telephone_perso_signup" name="telephone_perso_signup" value="<?=htmlspecialchars($tel)?>" required>
+            <label for="tel_perso_signup" class="form-label">Numéro de téléphone</label>
+            <input type="tel" class="form-control" id="tel_perso_signup" name="tel_perso_signup" value="<?=htmlspecialchars($tel)?>" required>
         </div>
 
         <div class="col-md-6">
-            <label for="email_perso_signup" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email_perso_signup" name="email_perso_signup" aria-describedby="inputGroupPrepend" value="<?=htmlspecialchars($email)?>" required>
+            <label for="mel_perso_signup" class="form-label">Email</label>
+            <input type="email" class="form-control" id="mel_perso_signup" name="mel_perso_signup" aria-describedby="inputGroupPrepend" value="<?=htmlspecialchars($email)?>" required>
         </div>
 
         
         <div class="col-md-6">
             <label for="email_perso_signup" class="form-label">Définir un mot de passe</label>
-            <input type="password" class="form-control" id="verifMdpPerso" name="verifMdpPerso" aria-describedby="inputGroupPrepend" value="<?htmlspecialchars($mdp)?>" required>
+            <input type="password" class="form-control" id="mdp_perso_signup" name="mdp_perso_signup" aria-describedby="inputGroupPrepend" required>
         </div>
 
         <div class="col-md-6">
             <label for="email_perso_signup" class="form-label">Confirmer le mot de passe</label>
-            <input type="password" class="form-control" id="" name="" aria-describedby="inputGroupPrepend" value="<?=htmlspecialchars($verifMdp)?>" required>
+            <input type="password" class="form-control" id="verifMdpPerso" name="verifMdpPerso" aria-describedby="inputGroupPrepend" required>
         </div>
 
         <div class="col-md-6">

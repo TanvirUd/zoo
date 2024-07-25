@@ -1,5 +1,5 @@
 <?php
-require_once("mother_entity.php");
+require_once("../app/entity/mother_entity.php");
 
 class Personnel extends Entity {
     private string $numMatriculePerso;
@@ -7,10 +7,10 @@ class Personnel extends Entity {
     private string $mdpPerso;
     private string $nomPerso;
     private string $prenomPerso;
-    private DATETIME $dateNaissancePerso;
+    private string $dateNaissancePerso;
     private string $adressePerso;
     private string $telPerso;
-    private string $numService; // en référence à numService de Service (=null)
+    private ?string $numService; // en référence à numService de Service (=null)
 
     public function getNumMatriculePerso(): string
     {
@@ -62,12 +62,12 @@ class Personnel extends Entity {
         $this->prenomPerso = $prenomPerso;
     }
 
-    public function getDateNaissancePerso(): DATETIME
+    public function getDateNaissancePerso(): string
     {
         return $this->dateNaissancePerso;
     }
 
-    public function setDateNaissancePerso(DATETIME $dateNaissancePerso): void
+    public function setDateNaissancePerso(string $dateNaissancePerso): void
     {
         $this->dateNaissancePerso = $dateNaissancePerso;
     }
@@ -92,12 +92,12 @@ class Personnel extends Entity {
         $this->telPerso = $telPerso;
     }
 
-    public function getNumService(): string
+    public function getNumService(): ?string
     {
         return $this->numService;
     }
 
-    public function setNumService(string $numService): void
+    public function setNumService(?string $numService): void
     {
         $this->numService = $numService;
     }
