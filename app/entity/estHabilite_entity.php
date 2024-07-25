@@ -1,6 +1,7 @@
 <?php
+require_once("mother_entity.php");
 
-class EstHabilite
+class EstHabilite extends Entity
 {
     private string $numMatriculePerso; //en référence à numMatriculePerso de Personnel
     private string $idAppli; // en référence à idAppli

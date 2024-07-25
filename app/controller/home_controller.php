@@ -12,7 +12,7 @@ class HomeCtrl extends MotherCtrl
         $this->_data['title'] = "Gestion des rôles";
         $errors = array();
 
-        require_once("../app/Model/roleApplicatif_model.php");
+        require_once("../app/model/roleApplicatif_model.php");
         $roleApplicatif = new RoleApplicatifModel();
         $roleApplicatifs = $roleApplicatif->getAll();
         
@@ -21,7 +21,7 @@ class HomeCtrl extends MotherCtrl
             foreach($roleApplicatifs as $roleApplicatif) {
                 require_once("../app/entity/roleApplicatif_entity.php");
                 $roleAppEntity = new RoleApplicatif();
-                $roleAppEntity->hydrate = $roleApplicatif;  
+                $roleAppEntity->hydrate($roleApplicatif);  
                 $roleAppEntities[] = $roleAppEntity;            
             }
 

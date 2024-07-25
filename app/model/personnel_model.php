@@ -75,6 +75,22 @@ class PersonnelModel extends PdoModel
         return $user != false;
     }
 
+    public function connectPersonnel(){
+        $melPerso = $_POST['email']; //insérer contenu form
+        $mdpPerso = $_POST['signup-password']; //insérer contenu form
+
+        $sql = "SELECT * FROM user WHERE melPerso=:melPerso";
+        $result = $this->_db->prepare($sql);
+        $result->bindValue(":melPerso", $melPerso, PDO::PARAM_STR);
+        $result->execute();
+        $user = $result->fetch();
+
+        if($user && password_verify($mdpPerso, $user['mdpPerso'])){
+            unset($user['mdpPerso']);
+            return $user;
+        }
+    }
+
     public function updatePersonnel(){
         $numMatriculePerso = $_SESSION['']; //insérer contenu form
         $numMatriculePersoUpdate = $_POST['']??""; //insérer contenu form
@@ -147,7 +163,7 @@ class PersonnelModel extends PdoModel
                 $result->bindParam(":numMatriculePersoUpdate", $numMatriculePersoUpdate, PDO::PARAM_STR);
                 $_SESSION[''] = $numMatriculePersoUpdate; //insérer contenu form
             }
-            if($melPerso != "" && !$this->checkEmailExist($melPerso)){
+            if($melPerso != "" && !$this->checkIfMelExist($melPerso)){
                 $result->bindParam(":melPerso", $melPerso, PDO::PARAM_STR);
                 $_SESSION[''] = $melPerso; //insérer contenu form
             }
