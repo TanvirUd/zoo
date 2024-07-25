@@ -3,13 +3,13 @@ require_once("pdo_model.php");
 class PersonnelModel extends PdoModel
 {
     public function createPersonnel(){
-        $melPerso = $_POST['']?? ""; //insérer contenu form
-        $nomPerso = $_POST['']?? ""; //insérer contenu form
-        $prenomPerso = $_POST['']?? ""; //insérer contenu form
-        $dateNaissancePerso = $_POST['']?? ""; //insérer contenu form
-        $adressePerso = $_POST['']?? ""; //insérer contenu form
-        $telPerso = $_POST['']?? ""; //insérer contenu form
-        $mdpPerso = password_hash($_POST['']?? "", PASSWORD_DEFAULT); //insérer contenu form
+        $melPerso = $_POST['mel_perso_signup']?? "";
+        $nomPerso = $_POST['nom_perso_signup']?? "";
+        $prenomPerso = $_POST['prenom_perso_signup']?? "";
+        $dateNaissancePerso = $_POST['date_naissance_perso_signup']?? "";
+        $adressePerso = $_POST['adresse_perso_signup']?? "";
+        $telPerso = $_POST['tel_perso_signup']?? "";
+        $mdpPerso = password_hash($_POST['mdp_perso_signup']?? "", PASSWORD_DEFAULT); //insérer contenu form
 
         // Générer un numéro matricule unique avec 2 chiffres et 2 lettres
         do {
