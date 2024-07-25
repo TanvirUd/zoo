@@ -7,7 +7,7 @@ $dotenv->load();
 
 class PdoModel{
     
-    protected $_db;
+    protected PDO $_db;
 
     public function __construct(){
         try {
