@@ -25,7 +25,7 @@ class estHabiliteModel extends PdoModel
 
     public function updateHabilitesPourPersonnel(string $numMatriculePerso) {
         try {
-            $sqlQuery="UPDATE INTO estHabilite (numMatriculePerso, idAppli, idRoleAppli)
+            $sqlQuery="UPDATE estHabilite SET (numMatriculePerso, idAppli, idRoleAppli)
             VALUES(:numMatriculePerso, :idAppli, :idRoleAppli)";
             $stmt = $this->_db->prepare($sqlQuery);
             $stmt->bindParam(':numMatriculePerso', $numMatriculePerso, PDO::PARAM_STR);
