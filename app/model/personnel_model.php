@@ -1,6 +1,8 @@
 <?php
 
-class personnelModel
+require_once('pdo_model.php');
+
+class personnelModel extends PdoModel
 {
     public function createPersonnel(){
         $melPerso = $_POST['']; //insérer contenu form
