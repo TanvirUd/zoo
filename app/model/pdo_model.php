@@ -1,13 +1,11 @@
 <?php
 
-require 'vendor/autoload.php';
-
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ ."/../..");
 $dotenv->load();
 
 class PdoModel{
     
-    protected $_db;
+    protected PDO $_db;
 
     public function __construct(){
         try {

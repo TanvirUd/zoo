@@ -1,5 +1,5 @@
 <?php
-class Personel {
+class Personnel {
     private string $numMatriculePerso;
     private string $melPerso;
     private string $mdpPerso;
