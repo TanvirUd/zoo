@@ -18,4 +18,26 @@ class estHabiliteModel extends PdoModel
             throw new Exception("Une erreur s'est produite");
         }
     }
+
+
+    public function assignHabilitesPourPersonnel($numMatriculePerso, $idRole)
+    {
+        try {
+            $sql = "INSERT INTO EstHabilite (numMatriculePerso, idAppli, idRoleAppli) VALUES(:numMatriculePerso, :idAppli, :idRoleAppli)";
+            $stmt = $this->_db->prepare($sql);
+            $stmt->bindParam(':numMatriculePerso', $numMatriculePerso, PDO::PARAM_STR);
+            $stmt->bindParam(':idAppli', $idAppli, PDO::PARAM_INT);
+            $stmt->bindParam(':idRoleAppli', $idRoleAppli, PDO::PARAM_INT);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+    }
+    public function removeHabilitesPourPersonnel($numMatriculePerso, $idAppli) {
+        $sql = "DELETE FROM EstHabilite WHERE numMatriculePerso = :numMatriculePerso AND idAppli = :idAppli";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->bindParam(':numMatriculePerso', $numMatriculePerso, PDO::PARAM_STR);
+        $stmt->bindParam(':idAppli', $idAppli, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
 }
