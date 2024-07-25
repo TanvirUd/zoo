@@ -7,6 +7,7 @@ class RoleApplicatif extends Entity
     private string $idRoleAppli;
     private string $mdpRoleAppli;
 
+
     /**
      * Get the value of idAppli
      */
@@ -14,6 +15,7 @@ class RoleApplicatif extends Entity
     {
         return $this->idAppli;
     }
+
 
     /**
      * Set the value of idAppli
