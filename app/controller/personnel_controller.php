@@ -1,7 +1,7 @@
 <?php
 require_once('mother_controller.php');
-
-class UserCtrl extends MotherCtrl
+require_once("../model/personnel_model.php");
+class PersonnelCtrl extends MotherCtrl
 {
     public function inscription()
     {
@@ -35,7 +35,6 @@ class UserCtrl extends MotherCtrl
             }
 
             if(count($errors) == 0) {
-                require_once("../app/Model/personnel_model.php");
                 $personnelModel = new PersonnelModel();
                 if($personnelModel->checkIfMelExist($email)) {
                     $errors[] = "Cet email est déjà utilisé";
@@ -51,7 +50,7 @@ class UserCtrl extends MotherCtrl
             $this->_data['errors'] = $errors;
         }
 
-        $this->_data['page'] = 'inscription';
+        $this->_data['page'] = 'signup';
         $this->render();
     }
 
@@ -104,7 +103,7 @@ class UserCtrl extends MotherCtrl
             $this->_data['errors'] = $errors;
         }
 
-        $this->_data['page'] = 'connexion';
+        $this->_data['page'] = 'login';
         $this->render();
     }
 
