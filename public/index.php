@@ -1,4 +1,6 @@
 <?php
+require '../vendor/autoload.php';
+require ("../app/model/personnel_model.php");
 
 session_start();
 
