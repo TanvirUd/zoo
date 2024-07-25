@@ -4,7 +4,7 @@
       <h2 class="card-title text-center mb-4">Connexion</h2>
 
       <!-- afficher le formulaire -->
-      <form action="" method="post">
+      <form action="connexion" method="post">
         <div class="form-group mb-3">
           <label for="emailperso">Votre email</label>
           <input type="email" class="form-control" id="emailperso" name="emailperso" aria-describedby="emailHelp" placeholder="Saisir votre email" required>

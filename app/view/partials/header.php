@@ -10,5 +10,5 @@
     <a href="index.php?controller=user&action=inscription">inscription</a>
     <a href="index.php?controller=user&action=connexion">connexion</a>
     <?php if(isset($_SESSION['matricule'])) : ?>
-        <a href="index.php?controller=user&action=deconnexion">deconnexion</a>
+        <a href="index.php?controller=personnel&action=deconnexion">deconnexion</a>
     <?php endif; ?>

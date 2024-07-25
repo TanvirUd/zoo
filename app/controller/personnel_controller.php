@@ -1,7 +1,7 @@
 <?php
 require_once('mother_controller.php');
 
-class UserCtrl extends MotherCtrl
+class PersonnelCtrl extends MotherCtrl
 {
     public function inscription()
     {
@@ -51,13 +51,13 @@ class UserCtrl extends MotherCtrl
             $this->_data['errors'] = $errors;
         }
 
-        $this->_data['page'] = 'inscription';
+        $this->_data['page'] = 'signup';
         $this->render();
     }
 
     public function connexion()
     {
-        $this->_data['title'] = 'Connexion';
+        $this->_data['title'] = 'login';
         $errors = array();
 
         $email = $_POST['melPerso']??'';

@@ -24,7 +24,7 @@ class MotherCtrl
         if(file_exists($pageLocate)){
             require($pageLocate);
         } else {
-            require("../app/view/404.php");
+           // require("../app/view/404.php");
         }
 
         require("../app/view/partials/footer.php");
