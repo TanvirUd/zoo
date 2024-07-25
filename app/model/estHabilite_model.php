@@ -1,6 +1,7 @@
 <?php
+require_once('pdo_model.php');
 
-class estHabiliteModel
+class estHabiliteModel extends PdoModel
 {
     public function getHabilitesById(string $numMatriculePerso) {
         try {
