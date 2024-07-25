@@ -1,6 +1,6 @@
 <?php
 require_once('mother_controller.php');
-require_once("../model/personnel_model.php");
+
 class PersonnelCtrl extends MotherCtrl
 {
     public function inscription()
@@ -16,6 +16,16 @@ class PersonnelCtrl extends MotherCtrl
         $dateNaissance = $_POST['date_naissance_perso_signup']??'';
         $adresse = $_POST['adresse_perso_signup']??'';
         $tel = $_POST['tel_perso_signup']??'';
+
+
+        $this->_data['email'] = $email;
+        $this->_data['mdp'] = $mdp;
+        $this->_data['verifMdp'] = $verifMdp;
+        $this->_data['nom'] = $nom;
+        $this->_data['prenom'] = $prenom;
+        $this->_data['dateNaissance'] = $dateNaissance;
+        $this->_data['adresse'] = $adresse;
+        $this->_data['tel'] = $tel;
 
         if(count($_POST) > 0) {
             if($email == ""){
@@ -35,6 +45,7 @@ class PersonnelCtrl extends MotherCtrl
             }
 
             if(count($errors) == 0) {
+                require_once("../app/Model/personnel_model.php");
                 $personnelModel = new PersonnelModel();
                 if($personnelModel->checkIfMelExist($email)) {
                     $errors[] = "Cet email est déjà utilisé";
@@ -56,11 +67,14 @@ class PersonnelCtrl extends MotherCtrl
 
     public function connexion()
     {
-        $this->_data['title'] = 'Connexion';
+        $this->_data['title'] = 'login';
         $errors = array();
 
         $email = $_POST['melPerso']??'';
         $mdp = $_POST['mdpPerso']??'';
+
+        $this->_data['email'] = $email;
+        $this->_data['mdp'] = $mdp;
 
         if(count($_POST) > 0) {
             if($email == ""){
