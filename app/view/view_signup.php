@@ -1,5 +1,3 @@
-<?php require_once('partials/header.php') ?>
-
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
     <form class="row g-3 bg-light p-5">
         <h2 class="text-center mb-4">Créer un compte</h2>
