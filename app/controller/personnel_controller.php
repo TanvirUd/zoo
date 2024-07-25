@@ -72,6 +72,9 @@ class PersonnelCtrl extends MotherCtrl
         $email = $_POST['melPerso']??'';
         $mdp = $_POST['mdpPerso']??'';
 
+        $this->_data['email'] = $email;
+        $this->_data['mdp'] = $mdp;
+
         if(count($_POST) > 0) {
             if($email == ""){
                 $errors[] = "Veuillez entrer votre adresse email";
