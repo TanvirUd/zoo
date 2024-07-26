@@ -65,7 +65,12 @@ class RoleCtrl extends MotherCtrl
             $this->_data['applications'] = $applicationEntities;
         }
 
+        if(count($errors) > 0) {
+            $this->_data['errors'] = $errors;
+        }
         
+        $this->_data['page'] = "affectationrole";
+        $this->render();
     }
 
     public function permissions()
