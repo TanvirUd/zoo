@@ -3,10 +3,17 @@ require '../vendor/autoload.php';
 require ("../app/model/personnel_model.php");
 
 session_start();
+$userIsLoggedIn = false;
+if (isset($_SESSION['matricule'])) {
+    $userIsLoggedIn = true;
 
 $strCtrl    = $_GET['controller']??'home';
 $strMethod  = $_GET['action']??'homepage';
 
+} else {
+    $strCtrl    = $_GET['controller']??'personnel';
+    $strMethod  = $_GET['action']??'connexion';
+}
 $strCtrlFileLocation = "../app/controller/".$strCtrl."_controller.php"; // String pour accéder le controller
 $strCtrlName    = ucfirst($strCtrl)."Ctrl"; // Pour définir le controller
 $boolErrorFlag = false; // Pour lancer le page d'error
