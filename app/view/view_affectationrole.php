@@ -16,7 +16,7 @@
           <div class="col-md-10 col-sm-12">
             <div class="input-group">
               <label for="nomPerso" class="input-group-text">Sélectionner un membre du personnel</label>
-              <select class="form-select" aria-label="Default select example">
+              <select class="form-select" aria-label="Default select example" name="nomPerso">
               <?php
                 if (isset($this->_data['personnels']) && is_array($this->_data['personnels'])) {
                     foreach ($this->_data['personnels'] as $personnel) {
@@ -56,13 +56,13 @@
                 <tr>
                   <th scope="row "><?php echo htmlspecialchars($nomAppli); ?></th>
                   <td>
-                  <select class="form-select" aria-label="Default select example">
+                  <select class="form-select" aria-label="Default select example" name="nomAppli">
                     <?php
                     if (isset($this->_data['applications']) && is_array($this->_data['applications'])) {
                         foreach ($applicationData['roleApplicatifs'] as $role) {
                             $roleId = $role->getIdAppli();
                             $roleName = $role->getIdRoleAppli();
-                            echo "<option value='" . htmlspecialchars($roleId) . "'>" . htmlspecialchars($roleName) . "</option>";
+                            echo "<option value='" .htmlspecialchars($roleId).":".htmlspecialchars($roleName). "'>" . htmlspecialchars($roleName) . "</option>";
                         }
                     } else {
                         echo "<option value=''>Aucun role disponible</option>";

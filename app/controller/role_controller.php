@@ -3,6 +3,7 @@ require_once('../app/controller/mother_controller.php');
 
 class RoleCtrl extends MotherCtrl
 {
+    // http://primary.mshome.net/index.php?controller=role&action=affectRole
     public function affectRole()
     {
         require_once("../app/model/personnel_model.php");
@@ -11,10 +12,11 @@ class RoleCtrl extends MotherCtrl
         require_once("../app/entity/roleApplicatif_entity.php");
         require_once("../app/model/application_model.php");
         require_once("../app/entity/application_entity.php");
-        
 
         $this->_data['title'] = "Affectation des roles aux membres du personnel";
         $errors = array();
+
+        $this->affectRolePost();
 
         $personnelModel = new PersonnelModel();
         $personnels = $personnelModel->getAllPersonnel();
@@ -73,26 +75,21 @@ class RoleCtrl extends MotherCtrl
         require_once("../app/model/estHabilite_model.php");
         require_once("../app/entity/estHabilite_entity.php");
 
-        $numMatriculePerso = filter_var($_POST[''])??"";
-        $idAppli = filter_var($_POST[''])??"";
-        $roleApplicatif = filter_var($_POST[''])??"";
+        if (isset($_POST) && count($_POST) > 0) {
+            $numMatriculePerso = filter_var($_POST['nomPerso'])??"";
+            $dropSelect = explode(":", $_POST['nomAppli'])??"";
+            $idAppli = filter_var($dropSelect[0])??"";
+            $roleApplicatif = filter_var($dropSelect[1])??"";
 
-        if (isset($_POST)){
             if($numMatriculePerso == "" || $idAppli == "") {
                 $errors[] = "Veuillez renseigner tous les champs";
             }
 
             if(count($errors) == 0) {
                 $estHabiliteModel = new EstHabiliteModel();
-                $estHabiliteModel->assignHabilitesPourPersonnel($numMatriculePerso, $idAppli, $roleApplicatif);
+                $estHabiliteModel->assignHabilitesPourPersonnel($numMatriculePerso, intval($idAppli), $roleApplicatif);
             }
         }
-
-        if(count($errors) > 0) {
-            $this->_data['errors'] = $errors;
-        }
-
-        $this->affectRole();
     }
 
     public function permissions()
