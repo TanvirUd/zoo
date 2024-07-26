@@ -89,7 +89,7 @@ class PersonnelModel extends PdoModel
 
     public function getAllPersonnel(){
         try{
-            $sql = "SELECT * FROM personnel";
+            $sql = "SELECT * FROM Personnel";
             $result = $this->_db->prepare($sql);
             $result->execute();
             $personnel = $result->fetchAll();

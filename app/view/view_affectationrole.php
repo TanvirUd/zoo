@@ -9,20 +9,16 @@
             <div class="input-group">
               <label for="nomPerso" class="input-group-text">Sélectionner un membre du personnel</label>
               <select class="form-select" aria-label="Default select example">
-                <!-- test option select nom du personnel -->
-                <?= //$selectNomsPersonnel;
-                $nomPersonnel = [
-                  'louis Louis' => 'louis Louis',
-                  'marc Marc' => 'marc Marc',
-                  'laura Laura' => 'laura Laura',
-                  'marie Marie' => 'marie Marie',
-                ];
-
-                foreach ($nomPersonnel as $key => $value) {
-                  $value = $key;
-                  echo "<option value='$key'>$value</option>";
+              <?php
+                if (isset($this->_data['personnels']) && is_array($this->_data['personnels'])) {
+                    foreach ($this->_data['personnels'] as $personnel) {
+                        $fullName = $personnel->getNomComplet();
+                        $numMatricule = $personnel->getNumMatriculePerso();
+                        echo "<option value='$numMatricule'>$fullName</option>";
+                    }
+                } else {
+                    echo "<option value=''>Aucun personnel disponible</option>";
                 }
-                ?>
                 ?>
               </select>
             </div>
@@ -42,64 +38,38 @@
               <!-- ELEMENTS A DYNAMISER -->
               <!-- corps du tableau -->
               <tbody class="table-group-divider">
-                <!-- éléments du corps -->
+              <?php if (isset($this->_data['applications']) && is_array($this->_data['applications'])): ?>
+                <?php foreach ($this->_data['applications'] as $applicationData): ?>
+                  <?php
+                    $application = $applicationData['application'];
+                    $nomAppli = $application->getNomAppli();
+                  ?>
+                  <!-- éléments du corps -->
                 <tr>
-                  <th scope="row ">Gestiond du parc animalier</th>
+                  <th scope="row "><?php echo htmlspecialchars($nomAppli); ?></th>
                   <td>
-                    <select class="form-select" aria-label="Default select example">
-                      <!-- test affichage des options select -->
-                      <?=
-                      $rolesAnimaliers = [
-                        'animaux_cordinateur' => 'animaux_cordinateur',
-                        'animaux_developpeur' => 'animaux_developpeur',
-                      ];
-
-                      foreach ($rolesAnimaliers as $key => $value) {
-                        $value = $key;
-                        echo "<option value='$key'>$value</option>";
-                      } ?>
-                    </select>
+                  <select class="form-select" aria-label="Default select example">
+                    <?php
+                    if (isset($this->_data['applications']) && is_array($this->_data['applications'])) {
+                        foreach ($applicationData['roleApplicatifs'] as $role) {
+                            $roleId = $role->getIdAppli();
+                            $roleName = $role->getIdRoleAppli();
+                            echo "<option value='" . htmlspecialchars($roleId) . "'>" . htmlspecialchars($roleName) . "</option>";
+                        }
+                    } else {
+                        echo "<option value=''>Aucun role disponible</option>";
+                    }
+                    ?>
+                </select>
                   </td>
                 </tr>
-
-                <tr>
-                  <th scope="row ">Gestion des ateliers</th>
-                  <td>
-                    <select class="form-select" aria-label="Default select example">
-                    <!-- test affichage des options select -->
-                      <?=
-                      $rolesAteliers = [
-                        'atelier_cordinateur' => 'atelier_cordinateur',
-                        'atelier_developpeur' => 'atelier_developpeur',
-                      ];
-
-                      foreach ($rolesAteliers as $key => $value) {
-                        $value = $key;
-                        echo "<option value='$key'>$value</option>";
-                      } ?>
-                    </select>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th scope="row ">Gestion des hébergements</th>
-                  <td>
-                    <select class="form-select" aria-label="Default select example">
-
-                    <!-- test affichage des options select -->
-                      <?=
-                      $rolesHebergements = [
-                        'hebergement_cordinateur' => 'hebergement_cordinateur',
-                        'hebergement_developpeur' => 'hebergement_developpeur',
-                      ];
-
-                      foreach ($rolesHebergements as $key => $value) {
-                        $value = $key;
-                        echo "<option value='$key'>$value</option>";
-                      } ?>
-                    </select>
-                  </td>
-                </tr>
+                <?php endforeach; ?>
+              <?php else: ?>
+                  <tr>
+                      <td colspan="2">Aucune application disponible</td>
+                  </tr>
+              <?php endif; ?>
+                 <!-- Fin éléments du corps -->
               </tbody>
             </table>
             <button class="btn btn-primary" type="submit">Valider</button>
