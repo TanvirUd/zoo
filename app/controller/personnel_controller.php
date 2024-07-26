@@ -3,24 +3,6 @@ require_once('../app/controller/mother_controller.php');
 
 class PersonnelCtrl extends MotherCtrl
 {
-    //méthode pour afficher les noms complets des personnels dans le select
-    public function afficherNomsPersonnels()
-    {
-        require_once("../app/model/personnel_model.php");
-        $personnelModel = new PersonnelModel();
-        $fullNames = $personnelModel->getPersonnelByFullName();
-
-        // construction du select pour afficher les noms du personnel
-        $selectNomsPersonnel = "";
-
-        foreach ($fullNames as $personnel) {
-            $selectNomsPersonnel .= '<option>' . htmlspecialchars($personnel['fullName']) . '</option>';
-        }
-        $this->_data['selectNomsPersonnel'] = $selectNomsPersonnel;
-        $this->_data['page'] = 'affectationrole';
-        $this->render();
-    }
-
     public function inscription()
     {
         $this->_data['title'] = 'Inscription';
@@ -130,7 +112,6 @@ class PersonnelCtrl extends MotherCtrl
                         $_SESSION['adresse'] = $personnel->getAdressePerso();
                         $_SESSION['tel'] = $personnel->getTelPerso();
                         $_SESSION['mel'] = $personnel->getMelPerso();
-
                         header('Location: index.php');
                     }
                 }
@@ -152,4 +133,18 @@ class PersonnelCtrl extends MotherCtrl
         session_destroy();
         header('Location: index.php');
     }
+    
+    
+    public function delete(){
+        $numMatriculePerso = $_SESSION['matricule'] ?? "";
+        $objModel = new PersonnelModel();
+        if($numMatriculePerso != "" && $objModel->deletePersonnel($numMatriculePerso)){
+            session_destroy();
+            header("location: index.php?controller=user&action=login");
+        }else{
+            header("location: index.php?controller=error&action=error_403");
+        }
+    }
+
 }
+

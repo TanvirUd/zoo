@@ -34,7 +34,8 @@
   /* Creer le table application */
   CREATE TABLE IF NOT EXISTS `Application` (
     `idAppli` INT(10) NOT NULL AUTO_INCREMENT,
-    `nomAppli` VARCHAR(3) NOT NULL,
+    `nomAppli` VARCHAR(50) NOT NULL,
+    `dbAppli` VARCHAR(50) NOT NULL,
     PRIMARY KEY (`idAppli`)
   ) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
