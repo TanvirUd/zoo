@@ -1,6 +1,6 @@
 <?php
 require '../vendor/autoload.php';
-require_once('mother_controller.php');
+require_once('../app/controller/mother_controller.php');
 
 class FakerCtrl extends MotherCtrl
 {
@@ -31,11 +31,7 @@ class FakerCtrl extends MotherCtrl
     {
         $nomAppli = [
             ['nomappli' => 'Gestion du parc Animalier', 'nomBdd' => 'BdAnimaux'],
-            ['nomappli' => 'Gestion des atteliers', 'nomBdd' => 'BdAtelier'],
-            ['nomappli' => 'Zookeeper', 'nomBdd' => 'BdKeeper'],
-            ['nomappli' => 'Vétérinaire', 'nomBdd' => 'BdVeterinaire'],
-            ['nomappli' => 'Conservateur du zoo', 'nomBdd' => 'BdConservateur'],
-            ['nomappli' => 'Educateur du zoo', 'nomBdd' => 'BdEducateur'],
+            ['nomappli' => 'Gestion des atteliers', 'nomBdd' => 'BdAtelier']
         ];
 
         require_once('../app/model/application_model.php');
@@ -61,9 +57,22 @@ class FakerCtrl extends MotherCtrl
             $applicationEntity = new Application();
             $applicationEntity->hydrate($value);
             $idAppli = $applicationEntity->getIdAppli();
-            $nomAppli = substr($applicationEntity->getDbAppli(), 2);
-            
-            
+            $nomAppli = strtolower(substr($applicationEntity->getDbAppli(), 2));
+
+            $roleApplicatifModel = new RoleApplicatifModel();
+            $roleApplicatifModel->createRoleApplicatif($idAppli, $nomAppli.'_coordinateur', 'coord');
+            echo 'Id de l\'application : ' . $idAppli . ' Role de l\'application ' . $nomAppli.'_coordinateur Mot de passe : coord' . '<br>';
+            $roleApplicatifModel->createRoleApplicatif($idAppli, $nomAppli.'_developpeur', 'devel');
+            echo 'Id de l\'application : ' . $idAppli . ' Role de l\'application ' . $nomAppli.'_developpeur Mot de passe : devel' . '<br>';
+            $roleApplicatifModel->createRoleApplicatif($idAppli, $nomAppli.'_superviseur', 'super');
+            echo 'Id de l\'application : ' . $idAppli . ' Role de l\'application ' . $nomAppli.'_superviseur Mot de passe : super' . '<br>';            
         }
+    }
+
+    public function createAll()
+    {
+        $this->createPersonnal();
+        $this->createApplications();
+        $this->createRoles();
     }
 }

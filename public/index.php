@@ -6,15 +6,20 @@ session_start();
 $userIsLoggedIn = false;
 if (isset($_SESSION['matricule'])) {
     $userIsLoggedIn = true;
-
-$strCtrl    = $_GET['controller']??'home';
-$strMethod  = $_GET['action']??'homepage';
+    $strCtrl    = $_GET['controller']??'home';
+    $strMethod  = $_GET['action']??'homepage';
 
 } else {
-    $strCtrl    = $_GET['controller']??'personnel';
-    $strMethod  = $_GET['action']??'connexion';
+    $strCtrl    = 'personnel';
+    $strMethod  = 'connexion';
 }
-$strCtrlFileLocation = "../app/controller/".$strCtrl."_controller.php"; // String pour accéder le controller
+
+if ($strCtrl == 'faker') {
+    $strCtrlFileLocation = "../faker/controller/".$strCtrl."_controller.php"; // String pour accéder à faker
+}else{
+    $strCtrlFileLocation = "../app/controller/".$strCtrl."_controller.php"; // String pour accéder le controller
+}
+
 $strCtrlName    = ucfirst($strCtrl)."Ctrl"; // Pour définir le controller
 $boolErrorFlag = false; // Pour lancer le page d'error
 
