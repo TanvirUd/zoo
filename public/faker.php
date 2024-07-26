@@ -1,5 +1,7 @@
 <?php
-include('../app/model/personnel_model.php');
+require '../vendor/autoload.php';
+require ("../app/model/personnel_model.php");
+
 $faker = Faker\Factory::create('fr_FR');
 $faker->addProvider(new Faker\Provider\fr_FR\PhoneNumber($faker));
 const NB_CONTACTS = 15;
@@ -21,5 +23,5 @@ for ($i = 0; $i < NB_CONTACTS; $i++) {
         'content' => $content]
     ]);
 
-    $result = file_get_contents('index.php?controller=user&action=inscription', false, $context);
+    $result = file_get_contents('index.php', false, $context);
 }
