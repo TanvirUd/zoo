@@ -1,9 +1,17 @@
-<form action="" method="post">
+<form action="index.php?controller=role&action=affectRole" method="post">
   <div class="container min-vh-100 ">
     <div class="row justify-content-center bg-light mt-5">
       <div class="col-md-8">
         <h2 class="text-center mb-4 mt-4">Affectation des rôles aux membres du personnel</h2>
 
+        <!-- affichage message d'erreur -->
+        <?php
+        if (isset($error)) {
+          echo '<div class="alert alert-danger" role="alert">';
+          echo $error;
+          echo '</div>';
+        }
+        ?>
         <div class="row mb-3">
           <div class="col-md-10 col-sm-12">
             <div class="input-group">
@@ -66,7 +74,7 @@
                   <th scope="row ">Gestion des ateliers</th>
                   <td>
                     <select class="form-select" aria-label="Default select example">
-                    <!-- test affichage des options select -->
+                      <!-- test affichage des options select -->
                       <?=
                       $rolesAteliers = [
                         'atelier_cordinateur' => 'atelier_cordinateur',
@@ -86,7 +94,7 @@
                   <td>
                     <select class="form-select" aria-label="Default select example">
 
-                    <!-- test affichage des options select -->
+                      <!-- test affichage des options select -->
                       <?=
                       $rolesHebergements = [
                         'hebergement_cordinateur' => 'hebergement_cordinateur',

@@ -96,7 +96,7 @@ class RoleCtrl extends MotherCtrl
 
     public function permissions()
     {
-        $this->_data['title'] = "Définition des drits associes à un rôle";
+        $this->_data['title'] = "Définition des droits associes à un rôle";
         $errors = array();
 
         require_once("../app/model/roleApplicatif_model.php");
@@ -112,6 +112,7 @@ class RoleCtrl extends MotherCtrl
             }
             $this->_data['roleApplicatifs'] = $roleAppEntities;
         }
-
+        $this->_data['page'] = "droits";
+        $this->render();
     }
 }

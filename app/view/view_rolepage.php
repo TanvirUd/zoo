@@ -1,8 +1,16 @@
-<form action="index.php?controller=role&action=" method="post">
+<form action="index.php" method="post">
   <div class="container min-vh-100 ">
     <div class="row justify-content-center bg-light mt-5">
       <div class="col-md-8">
         <h2 class="text-center mb-4 mt-4">Gestion des rôles</h2>
+        <!-- affichage message d'erreur -->
+        <?php
+        if (isset($error)) {
+          echo '<div class="alert alert-danger" role="alert">';
+          echo $error;
+          echo '</div>';
+        }
+        ?>
 
         <div class="row mb-3">
           <div class="col-md-6 col-sm-12">
@@ -16,7 +24,7 @@
             <button class="btn btn-primary fw-bold" type="button" popovertarget="ajouter">+ Ajouter</button>
 
             <!-- formulaire popover pour ajout d'un ouveau rôle applicatif -->
-            <div class="container mt-6" id="ajouter"  popover>
+            <div class="container mt-6" id="ajouter" popover>
               <h3 class="mb-4">Ajouter un nouveau rôle applicatif</h3>
 
               <form action="index.php?controller=role&action=" method="POST">
