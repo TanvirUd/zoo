@@ -1,3 +1,4 @@
+<form action="index.php?controller=role&action=" method="post">
 <div class="container min-vh-100 ">
     <div class="row justify-content-center bg-light mt-5">
         <div class="col-md-8">
@@ -7,7 +8,7 @@
                 <div class="col-md-6 offset-md-3 col-sm-12">
                     <div class="input-group">
                       <label for="search" class="input-group-text">Chercher</label>
-                        <input type="search" class="form-control" placeholder="Rechercher un rôle...">
+                        <input type="search" class="form-control" id="search" placeholder="Rechercher un rôle...">
                     </div>
                 </div>
 
@@ -31,8 +32,9 @@
                     </thead>
                     <!-- ELEMENTS A DYNAMISER -->
                     <!-- corps du tableau -->
+                    <tbody class="table-group-divider">
                     <!-- éléments du corps -->
-                      <tr>
+                      <!-- <tr>
                         <th scope="row " >animaux_coordinateur</th>
                           <td>Gestion du parc Animalier</td>
                           <td>BdAnimaux</td>
@@ -60,14 +62,28 @@
                           <input class="btn btn-primary fw-bold" type="submit" value="Modifier">
                           <input class="btn btn-danger fw-bold" type="submit" value="Supprimer">
                         </td>
-                      </tr>
-                      
-                      
+                      </tr> -->
 
+<?php
+
+$roleApplicatifs = [['idAppli' => '1', 'idRoleAppli' => 'animaux_coordinateur', 'bdd' => 'BdAnimaux'],
+['idAppli' => '2', 'idRoleAppli' => 'animaux_stagiaire', 'bdd' => 'BdAnimaux'],] ?>
+                      <?php foreach ($roleApplicatifs as $role) : ?>
+                        <tr>
+                            <th scope="row"><?php echo htmlspecialchars($role['idAppli']); ?></th>
+                            <td><?php echo htmlspecialchars($role['idRoleAppli']); ?></td>
+                            <td><?php echo htmlspecialchars($role['bdd']); ?></td>
+                            <td>
+                                <button class="btn btn-primary fw-bold" type="button">Modifier</button>
+                                <button class="btn btn-danger fw-bold" type="button">Supprimer</button>
+                            </td>
+                        </tr>
+                      <?php endforeach; ?>
+                      
                     </tbody>
                 </table>
             </div>
-            
+</form>
         
         </div>
     </div>

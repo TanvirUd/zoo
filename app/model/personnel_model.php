@@ -1,14 +1,23 @@
 <?php
-require_once("../app/model/pdo_model.php");
+require_once("./app/model/pdo_model.php");
 class PersonnelModel extends PdoModel
 {
+
+    //récupérer les personnels par leurs nom complets
+    public function getPersonnelByFullName(): array {
+        $sql = "SELECT id, CONCAT(prenomPerso, ' ', nomPerso) AS fullName FROM Personnel";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
     public function createPersonnel(){
-        $melPerso = $_POST['mel_perso_signup']?? "";
-        $nomPerso = $_POST['nom_perso_signup']?? "";
-        $prenomPerso = $_POST['prenom_perso_signup']?? "";
-        $dateNaissancePerso = $_POST['date_naissance_perso_signup']?? "";
-        $adressePerso = $_POST['adresse_perso_signup']?? "";
-        $telPerso = $_POST['tel_perso_signup']?? "";
+        $melPerso = htmlspecialchars($_POST['mel_perso_signup'], ENT_QUOTES, 'UTF-8');
+        $nomPerso = htmlspecialchars($_POST['nom_perso_signup'], ENT_QUOTES, 'UTF-8');
+        $prenomPerso = htmlspecialchars($_POST['prenom_perso_signup'], ENT_QUOTES, 'UTF-8');
+        $dateNaissancePerso = $_POST['date_naissance_perso_signup'];
+        $adressePerso = htmlspecialchars($_POST['adresse_perso_signup'], ENT_QUOTES, 'UTF-8');
+        $telPerso = htmlspecialchars($_POST['tel_perso_signup'], ENT_QUOTES, 'UTF-8');
         $mdpPerso = password_hash($_POST['mdp_perso_signup']?? "", PASSWORD_DEFAULT); //insérer contenu form
 
         // Générer un numéro matricule unique avec 2 chiffres et 2 lettres
