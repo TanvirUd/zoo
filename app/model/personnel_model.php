@@ -1,5 +1,5 @@
 <?php
-require_once("./app/model/pdo_model.php");
+require_once("../app/model/pdo_model.php");
 class PersonnelModel extends PdoModel
 {
 

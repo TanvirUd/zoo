@@ -5,7 +5,7 @@
               <h2 class="text-center mb-4 mt-4">Affectation des rôles aux membres du personnel</h2>
               
               <div class="row mb-3">
-                  <div class="col-md-6 col-sm-12">
+                  <div class="col-md-10 col-sm-12">
                       <div class="input-group">
                           <label for="nomPerso" class="input-group-text">Sélectionner un membre du personnel</label>
                           <select class="form-select" aria-label="Default select example">
@@ -31,32 +31,43 @@
                       <tbody class="table-group-divider">
                       <!-- éléments du corps -->
                         <tr>
-                          <th scope="row " >animaux_coordinateur</th>
-                            <td>Gestion du parc Animalier</td>
-                            <td>BdAnimaux</td>
+                          <th scope="row " >Gestiond du parc animalier</th>
                             <td>
-                              <input class="btn btn-primary fw-bold" type="submit" value="Modifier">
-                              <input class="btn btn-danger fw-bold" type="submit" value="Supprimer">
+                              <select class="form-select" aria-label="Default select example">
+                                <option selected>Open this select menu</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                              </select>
                             </td>
                         </tr>
 
                         <tr>
-                          <th scope="row " >animaux_developpeur</th>
-                            <td>Gestion du parc Animalier</td>
-                            <td>BdAnimaux</td>
-                          <td>
-                            <input class="btn btn-primary fw-bold" type="submit" value="Modifier">
-                            <input class="btn btn-danger fw-bold" type="submit" value="Supprimer">
-                          </td>
+                          <th scope="row " >Gestion des ateliers</th>
+                            <td>
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Open this select menu</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                              </select>
+                            </td>
                         </tr>
 
-                  
-                        
+                        <tr>
+                          <th scope="row " >Gestion des hébergements</th>
+                            <td>
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Open this select menu</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                              </select>
+                            </td>
+                        </tr>
                       </tbody>
                   </table>
               </div>
-              
-          
           </div>
       </div>
   </div>

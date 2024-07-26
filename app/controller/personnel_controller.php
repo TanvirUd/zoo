@@ -6,7 +6,7 @@ class PersonnelCtrl extends MotherCtrl
     //méthode pour afficher les noms complets des personnels dans le select
     public function afficherNomsPersonnels()
     {
-        require_once("personnel_model.php");
+        require_once("../app/model/personnel_model.php");
         $personnelModel = new PersonnelModel();
         $fullNames = $personnelModel->getPersonnelByFullName();
 

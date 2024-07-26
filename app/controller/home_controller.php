@@ -35,7 +35,7 @@ class HomeCtrl extends MotherCtrl
             $this->_data['errors'] = $errors;
         }
 
-        $this->_data['page'] = "rolepage";
+        $this->_data['page'] = "droits";
         $this->render();
     }
 }

@@ -5,7 +5,7 @@
             <h2 class="text-center mb-4 mt-4">Gestion des rôles</h2>
             
             <div class="row mb-3">
-                <div class="col-md-6 offset-md-3 col-sm-12">
+                <div class="col-md-6 col-sm-12">
                     <div class="input-group">
                       <label for="search" class="input-group-text">Chercher</label>
                         <input type="search" class="form-control" id="search" placeholder="Rechercher un rôle...">
