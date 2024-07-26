@@ -3,6 +3,18 @@ require_once('pdo_model.php');
 
 class estHabiliteModel extends PdoModel
 {
+    public function getAllHabilites() {
+        try {
+            $sqlQuery="SELECT * FROM estHabilite";
+            $stmt = $this->_db->prepare($sqlQuery);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            throw new Exception("Une erreur s'est produite");
+        }
+    }
+
     public function getHabilitesByMatricule(string $numMatriculePerso) {
         try {
             $sqlQuery="SELECT estHabilite.idAppli, estHabilite.idRoleAppli, roleApplicatif.mdpRoleAppli 

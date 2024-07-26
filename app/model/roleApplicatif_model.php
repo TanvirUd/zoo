@@ -1,5 +1,5 @@
 <?php
-require_once("./app/model/pdo_model.php");
+require_once("../app/model/pdo_model.php");
 class RoleApplicatifModel extends PdoModel
 {
     public function getAll() {
@@ -7,6 +7,19 @@ class RoleApplicatifModel extends PdoModel
         $result = $this->_db->prepare($sql);
         $result->execute();
         return $result->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getRolesByAppliId($idAppli) {
+        try{
+            $sql = "SELECT * FROM RoleApplicatif WHERE idAppli=:idAppli";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(":idAppli", $idAppli, PDO::PARAM_INT);
+            $result->execute();
+            $role = $result->fetchAll();
+            return $role;
+        } catch (PDOException $e){
+            die('Erreur : '. $e->getMessage());
+        }
     }
 
     public function createRoleApplicatif($id, $roleAppli, $mdp) {
