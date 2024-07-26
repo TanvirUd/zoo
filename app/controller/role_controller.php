@@ -17,7 +17,7 @@ class RoleCtrl extends MotherCtrl
         $errors = array();
 
         $personnelModel = new PersonnelModel();
-        $personnels = $personnelModel->getPersonnelByFullName();
+        $personnels = $personnelModel->getAllPersonnel();
 
         if (isset($personnels) && count($personnels) > 0) {
             $personnelEntities = array();
@@ -110,7 +110,6 @@ class RoleCtrl extends MotherCtrl
                 $roleAppEntity->hydrate($roleApplicatif);
                 $roleAppEntities[] = $roleAppEntity;
             }
-            $this->_data['roleApplicatifs'] = $roleAppEntities;
         }
 
     }
