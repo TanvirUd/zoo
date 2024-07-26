@@ -54,7 +54,7 @@ class estHabiliteModel extends PdoModel
         }
     }
 
-    public function assignHabilitesPourPersonnel($numMatriculePerso, $idRole)
+    public function assignHabilitesPourPersonnel($numMatriculePerso, $idAppli, $idRoleAppli)
     {
         try {
             $sql = "INSERT INTO EstHabilite (numMatriculePerso, idAppli, idRoleAppli) VALUES(:numMatriculePerso, :idAppli, :idRoleAppli)";
