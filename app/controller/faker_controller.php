@@ -4,12 +4,16 @@ require_once('mother_controller.php');
 
 class FakerCtrl extends MotherCtrl
 {
-    public function createPersonnal()
+    private function faker()
     {
         $faker = Faker\Factory::create('fr_FR');
         $faker->addProvider(new Faker\Provider\fr_FR\PhoneNumber($faker));
         $NB_CONTACTS = 15;
+    }
 
+    public function createPersonnal()
+    {
+        $this->faker();
         require_once('../app/model/personnel_model.php');
 
         for ($i = 0; $i < $NB_CONTACTS; $i++) {
@@ -26,5 +30,10 @@ class FakerCtrl extends MotherCtrl
             $personnelModel = new PersonnelModel();
             $personnelModel->createPersonnelFaker($melPerso,$nomPerso,$prenomPerso,$dateNaissancePerso,$adressePerso,$telPerso);
         }
+    }
+
+    public function createApplications()
+    {
+        $nomAppli = ''
     }
 }

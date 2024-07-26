@@ -9,6 +9,19 @@ class RoleApplicatifModel extends PdoModel
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getRolesByAppliId($idAppli) {
+        try{
+            $sql = "SELECT * FROM RoleApplicatif WHERE idAppli=:idAppli";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(":idAppli", $idAppli, PDO::PARAM_INT);
+            $result->execute();
+            $role = $result->fetchAll();
+            return $role;
+        } catch (PDOException $e){
+            die('Erreur : '. $e->getMessage());
+        }
+    }
+
     public function createRoleApplicatif($id, $roleAppli, $mdp) {
         $idAppli = $id; // en référence à idAppli de Application
         $idRoleAppli = $roleAppli;

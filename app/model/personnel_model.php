@@ -5,7 +5,7 @@ class PersonnelModel extends PdoModel
 
     //récupérer les personnels par leurs nom complets
     public function getPersonnelByFullName(): array {
-        $sql = "SELECT id, CONCAT(prenomPerso, ' ', nomPerso) AS fullName FROM Personnel";
+        $sql = "SELECT numMatriculePerso, CONCAT(prenomPerso, ' ', nomPerso) AS fullName FROM Personnel";
         $stmt = $this->_db->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -82,6 +82,18 @@ class PersonnelModel extends PdoModel
             $result->bindParam(":telPerso", $telPerso, PDO::PARAM_STR);
             $result->bindParam(":numMatriculePerso", $numMatriculePerso, PDO::PARAM_STR);
             return $result->execute();
+        } catch (PDOException $e){
+            die('Erreur : '. $e->getMessage());
+        }
+    }
+
+    public function getAllPersonnel(){
+        try{
+            $sql = "SELECT * FROM personnel";
+            $result = $this->_db->prepare($sql);
+            $result->execute();
+            $personnel = $result->fetchAll();
+            return $personnel;
         } catch (PDOException $e){
             die('Erreur : '. $e->getMessage());
         }
