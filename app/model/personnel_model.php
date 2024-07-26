@@ -1,5 +1,5 @@
 <?php
-require_once("./app/model/pdo_model.php");
+require_once("../app/model/pdo_model.php");
 class PersonnelModel extends PdoModel
 {
 
@@ -12,14 +12,49 @@ class PersonnelModel extends PdoModel
     }
     
     public function createPersonnel(){
-        $melPerso = htmlspecialchars($_POST['mel_perso_signup'], ENT_QUOTES, 'UTF-8');
-        $nomPerso = htmlspecialchars($_POST['nom_perso_signup'], ENT_QUOTES, 'UTF-8');
-        $prenomPerso = htmlspecialchars($_POST['prenom_perso_signup'], ENT_QUOTES, 'UTF-8');
-        $dateNaissancePerso = $_POST['date_naissance_perso_signup'];
-        $adressePerso = htmlspecialchars($_POST['adresse_perso_signup'], ENT_QUOTES, 'UTF-8');
-        $telPerso = htmlspecialchars($_POST['tel_perso_signup'], ENT_QUOTES, 'UTF-8');
+        $melPerso = strip_tags($_POST['mel_perso_signup']);
+        $nomPerso = htmlentities($_POST['nom_perso_signup']);
+        $prenomPerso = htmlentities($_POST['prenom_perso_signup']);
+        $dateNaissancePerso = htmlentities($_POST['date_naissance_perso_signup']);
+        $adressePerso = htmlentities($_POST['adresse_perso_signup']);
+        $telPerso = htmlentities($_POST['tel_perso_signup']);
         $mdpPerso = password_hash($_POST['mdp_perso_signup']?? "", PASSWORD_DEFAULT); //insérer contenu form
 
+        // Générer un numéro matricule unique avec 2 chiffres et 2 lettres
+        do {
+            $digits = mt_rand(10, 99); // Génère 2 chiffres
+            $letters = strtoupper(chr(mt_rand(65, 90)) . chr(mt_rand(65, 90))); // Génère 2 lettres
+            $numMatriculePerso = $digits . $letters; // Par exemple "12AB"
+
+            // Vérification de l'unicité du numéro matricule
+            $sqlCheck = "SELECT COUNT(*) FROM Personnel WHERE numMatriculePerso = :numMatriculePerso";
+            $stmtCheck = $this->_db->prepare($sqlCheck);
+            $stmtCheck->bindParam(":numMatriculePerso", $numMatriculePerso, PDO::PARAM_STR);
+            $stmtCheck->execute();
+            $exists = $stmtCheck->fetchColumn();
+        } while ($exists > 0); // Répéter jusqu'à trouver un numéro unique
+
+        try{
+            $sql = "INSERT INTO Personnel(melPerso, mdpPerso, nomPerso, prenomPerso, dateNaissancePerso, adressePerso, telPerso, numMatriculePerso) 
+            VALUES (:melPerso, :mdpPerso, :nomPerso, :prenomPerso, :dateNaissancePerso, :adressePerso, :telPerso, :numMatriculePerso);";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(":melPerso", $melPerso, PDO::PARAM_STR);
+            $result->bindParam(":mdpPerso", $mdpPerso, PDO::PARAM_STR);
+            $result->bindParam(":nomPerso", $nomPerso, PDO::PARAM_STR);
+            $result->bindParam(":prenomPerso", $prenomPerso, PDO::PARAM_STR);
+            $result->bindParam(":dateNaissancePerso", $dateNaissancePerso, PDO::PARAM_STR);
+            $result->bindParam(":adressePerso", $adressePerso, PDO::PARAM_STR);
+            $result->bindParam(":telPerso", $telPerso, PDO::PARAM_STR);
+            $result->bindParam(":numMatriculePerso", $numMatriculePerso, PDO::PARAM_STR);
+            return $result->execute();
+        } catch (PDOException $e){
+            die('Erreur : '. $e->getMessage());
+        }
+    }
+
+    public function createPersonnelFaker($melPerso, $nomPerso, $prenomPerso, $dateNaissancePerso, $adressePerso, $telPerso){
+        $mdpPerso = password_hash("admin", PASSWORD_DEFAULT); //insérer contenu form
+        
         // Générer un numéro matricule unique avec 2 chiffres et 2 lettres
         do {
             $digits = mt_rand(10, 99); // Génère 2 chiffres
