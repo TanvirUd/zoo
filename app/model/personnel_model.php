@@ -2,6 +2,15 @@
 require_once("pdo_model.php");
 class PersonnelModel extends PdoModel
 {
+
+    //récupérer les personnels par leurs nom complets
+    public function getPersonnelByFullName(): array {
+        $sql = "SELECT id, CONCAT(prenomPerso, ' ', nomPerso) AS fullName FROM Personnel";
+        $stmt = $this->_db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
     public function createPersonnel(){
         $melPerso = $_POST['mel_perso_signup']?? "";
         $nomPerso = $_POST['nom_perso_signup']?? "";

@@ -12,6 +12,11 @@ class Personnel extends Entity {
     private string $telPerso;
     private string $numService; // en référence à numService de Service (=null)
 
+    public function getNomComplet(): string
+    {
+        return $this->prenomPerso . " " . $this->nomPerso;
+    }
+
     public function getNumMatriculePerso(): string
     {
         return $this->numMatriculePerso;
