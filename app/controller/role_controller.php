@@ -105,7 +105,7 @@ class RoleCtrl extends MotherCtrl
         if (isset($roleApplicatifs) && count($roleApplicatifs) > 0) {
             $roleAppEntities = array();
             foreach ($roleApplicatifs as $roleApplicatif) {
-                require_once("./app/entity/roleApplicatif_entity.php");
+                require_once("../app/entity/roleApplicatif_entity.php");
                 $roleAppEntity = new RoleApplicatif();
                 $roleAppEntity->hydrate($roleApplicatif);
                 $roleAppEntities[] = $roleAppEntity;
