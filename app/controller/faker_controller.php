@@ -26,9 +26,4 @@ class FakerCtrl extends MotherCtrl
             $personnelModel->createPersonnelFaker($melPerso,$nomPerso,$prenomPerso,$dateNaissancePerso,$adressePerso,$telPerso);
         }
     }
-
-    // public function createApplications()
-    // {
-    //     $nomAppli = ''
-    // } 
 }

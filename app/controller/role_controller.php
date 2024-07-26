@@ -5,8 +5,6 @@ class RoleCtrl extends MotherCtrl
 {
     public function affectRole()
     {
-        require_once("../app/model/estHabilite_model.php");
-        require_once("../app/entity/estHabilite_entity.php");
         require_once("../app/model/personnel_model.php");
         require_once("../app/entity/personnel_entity.php");
         require_once("../app/model/roleApplicatif_model.php");
@@ -59,10 +57,6 @@ class RoleCtrl extends MotherCtrl
                 $applicationEntities[] = $tempTable;
                 
             }
-
-            echo "<pre>";
-            print_r($applicationEntities);
-            echo "</pre>";
             $this->_data['applications'] = $applicationEntities;
         }
 
@@ -74,9 +68,36 @@ class RoleCtrl extends MotherCtrl
         $this->render();
     }
 
+    public function affectRolePost()
+    {
+        require_once("../app/model/estHabilite_model.php");
+        require_once("../app/entity/estHabilite_entity.php");
+
+        $numMatriculePerso = filter_var($_POST[''])??"";
+        $idAppli = filter_var($_POST[''])??"";
+        $roleApplicatif = filter_var($_POST[''])??"";
+
+        if (isset($_POST)){
+            if($numMatriculePerso == "" || $idAppli == "") {
+                $errors[] = "Veuillez renseigner tous les champs";
+            }
+
+            if(count($errors) == 0) {
+                $estHabiliteModel = new EstHabiliteModel();
+                $estHabiliteModel->assignHabilitesPourPersonnel($numMatriculePerso, $idAppli, $roleApplicatif);
+            }
+        }
+
+        if(count($errors) > 0) {
+            $this->_data['errors'] = $errors;
+        }
+
+        $this->affectRole();
+    }
+
     public function permissions()
     {
-        $this->_data['title'] = "Définition des drits associes à un rôle";
+        $this->_data['title'] = "Définition des droits associes à un rôle";
         $errors = array();
 
         require_once("../app/model/roleApplicatif_model.php");
@@ -90,8 +111,8 @@ class RoleCtrl extends MotherCtrl
                 $roleAppEntity->hydrate($roleApplicatif);
                 $roleAppEntities[] = $roleAppEntity;
             }
-            $this->_data['roleApplicatifs'] = $roleAppEntities;
         }
-
+        $this->_data['page'] = "droits";
+        $this->render();
     }
 }

@@ -28,5 +28,17 @@ class ApplicationModel extends PDOModel
         }
     }
 
+    public function createApplication($nomAppli, $dbAppli)
+    {
+        try {
+            $sql = "INSERT INTO Application (nomAppli, dbAppli) VALUES (:nomAppli, :dbAppli)";
+            $stmt = $this->_db->prepare($sql);
+            $stmt->bindParam(':nomAppli', $nomAppli, PDO::PARAM_STR);
+            $stmt->bindParam(':dbAppli', $dbAppli, PDO::PARAM_STR);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+    }
     
 }
