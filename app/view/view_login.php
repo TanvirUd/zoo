@@ -14,15 +14,15 @@
         ?>
 
       <!-- afficher le formulaire -->
-      <form action="connexion" method="post">
+      <form action="index.php?controller=personnel&action=connexion" method="post">
         <div class="form-group mb-3">
-          <label for="emailperso">Votre email</label>
-          <input type="email" class="form-control" id="emailperso" name="emailperso" aria-describedby="emailHelp" placeholder="Saisir votre email"  value="<?=htmlspecialchars($email)?>">
+          <label for="melPerso">Votre email</label>
+          <input type="email" class="form-control" id="melPerso" name="melPerso" aria-describedby="emailHelp" placeholder="Saisir votre email"  value="<?=htmlspecialchars($email)?>">
         </div>
 
         <div class="form-group mb-3">
-          <label for="mdp">Mot de passe</label>
-          <input type="password" class="form-control" id="mdp" name="mdp" placeholder="Saisir votre mot de passe" value="<?=htmlspecialchars($mdp)?>" required>
+          <label for="mdpPerso">Mot de passe</label>
+          <input type="password" class="form-control" id="mdpPerso" name="mdpPerso" placeholder="Saisir votre mot de passe" value="<?=htmlspecialchars($mdp)?>" required>
         </div>
 
         <div class="d-grid">

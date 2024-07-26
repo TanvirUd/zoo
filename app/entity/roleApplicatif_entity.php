@@ -1,13 +1,12 @@
 <?php
-require_once("mother_entity.php");
+require_once("../app/entity/mother_entity.php");
 
 class RoleApplicatif extends Entity
 {
     private int $idAppli; // en référence à idAppli de Application
     private string $idRoleAppli;
     private string $mdpRoleAppli;
-
-
+    
     /**
      * Get the value of idAppli
      */

@@ -2,11 +2,9 @@
 
 class Entity
 {
-    protected string $_strPrefixe = "";
-
     public function hydrate($arrData){
         foreach ($arrData as $key => $value) {
-            $strMethod = "set".ucfirst(str_replace($this->_strPrefixe, "", $key));
+            $strMethod = "set". ucfirst($key);
             if (method_exists($this, $strMethod)) {
                 $this->$strMethod($value);
             }

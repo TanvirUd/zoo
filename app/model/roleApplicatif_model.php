@@ -1,5 +1,5 @@
 <?php
-require_once("pdo_model.php");
+require_once("./app/model/pdo_model.php");
 class RoleApplicatifModel extends PdoModel
 {
     public function getAll() {
@@ -24,6 +24,51 @@ class RoleApplicatifModel extends PdoModel
             return $result->execute();
         } catch (PDOException $e){
             die('Erreur : '. $e->getMessage());
+        }
+    }
+
+    public function updateRoleApplicatif($idAppli) {
+        $roleAppli = $_POST['']??""; //insérer contenu form
+        $mdpRoleAppli = $_POST['']??""; //insérer contenu form
+        $flag = false;
+        try{
+            $sql = "UPDATE RoleApplicatif SET ";
+            if($roleAppli != ""){
+                if($flag){
+                    $sql .= ", ";
+                }
+                $sql .= "roleAppli=:roleAppli ";
+                $flag = true;
+            }
+            if($mdpRoleAppli != ""){
+                if($flag){
+                    $sql .= ", ";
+                }
+                $sql .= "mdpRoleAppli=:mdpRoleAppli ";
+            }
+            $sql .= "WHERE idAppli=:idAppli";
+            $result = $this->_db->prepare($sql);
+            if($mdpRoleAppli != ""){
+                $result->bindParam(":mdpPerso", $mdpRoleAppli, PDO::PARAM_STR);
+            }
+            if($roleAppli != ""){
+                $result->bindParam(":mdpPerso", $roleAppli, PDO::PARAM_STR);
+            }
+            $result->bindParam(":idAppli", $idAppli, PDO::PARAM_STR);
+            return $result->execute();
+        } catch (PDOException $e){
+            die('Erreur : '. $e->getMessage());
+        }
+    }
+
+    public function deleteRoleApplicatif($id) {
+        try {
+            $sql = "DELETE FROM RoleApplicatif WHERE idAppli = :idAppli";
+            $stmt = $this->_db->prepare($sql);
+            $stmt->bindParam(':idAppli', $idAppli, PDO::PARAM_INT);
+            return $stmt->execute();
+            } catch (PDOException $e){
+        die('Erreur : '. $e->getMessage());
         }
     }
 }

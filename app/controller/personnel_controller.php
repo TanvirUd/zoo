@@ -1,5 +1,5 @@
 <?php
-require_once('mother_controller.php');
+require_once('../app/controller/mother_controller.php');
 
 class PersonnelCtrl extends MotherCtrl
 {
@@ -63,20 +63,26 @@ class PersonnelCtrl extends MotherCtrl
             }
 
             if(count($errors) == 0) {
-                require_once("../app/Model/personnel_model.php");
+                require_once("../app/model/personnel_model.php");
                 $personnelModel = new PersonnelModel();
                 if($personnelModel->checkIfMelExist($email)) {
                     $errors[] = "Cet email est déjà utilisé";
                 }
 
                 if(count($errors) == 0) {
-                    $personnelModel->createPersonnel();
+                    if($personnelModel->createPersonnel()){
+                        header('Location: index.php?controller=personnel&action=connexion');
+                    }else{
+                        $errors[] = "Une erreur est survenue";
+                    }
+                    
                 }
             }
         }
 
         if(count($errors) > 0) {
             $this->_data['errors'] = $errors;
+            var_dump($errors);
         }
 
         $this->_data['page'] = 'signup';
@@ -103,7 +109,7 @@ class PersonnelCtrl extends MotherCtrl
             }
 
             if(count($errors) == 0) {
-                require_once("../app/Model/personnel_model.php");
+                require_once("../app/model/personnel_model.php");
                 $personnelModel = new PersonnelModel();
 
                 if(!$personnelModel->checkIfMelExist($email)) {
@@ -111,10 +117,11 @@ class PersonnelCtrl extends MotherCtrl
                 }
 
                 if(count($errors) == 0) {
-                    if($personnelModel->connectPersonnel()) {
-                        require_once("../app/Entity/personnel_entity.php");
+                    $user = $personnelModel->connectPersonnel();
+                    if($user) {
+                        require_once("../app/entity/personnel_entity.php");
                         $personnel = new Personnel();
-                        $personnel->hydrate($personnelModel);
+                        $personnel->hydrate($user);
 
                         $_SESSION['matricule'] = $personnel->getNumMatriculePerso();
                         $_SESSION['nom'] = $personnel->getNomPerso();
@@ -133,6 +140,7 @@ class PersonnelCtrl extends MotherCtrl
 
         if(count($errors) > 0) {
             $this->_data['errors'] = $errors;
+            var_dump($errors);
         }
 
         $this->_data['page'] = 'login';

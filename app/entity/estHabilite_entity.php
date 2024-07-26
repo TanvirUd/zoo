@@ -1,5 +1,5 @@
 <?php
-require_once("mother_entity.php");
+require_once("../app/entity/mother_entity.php");
 
 class EstHabilite extends Entity
 {
