@@ -252,7 +252,7 @@ class PersonnelModel extends PdoModel
 
     public function deletePersonnel($numMatriculePerso){
         try{
-            $sql = "DELETE FROM user WHERE numMatriculePerso=:numMatriculePerso";
+            $sql = "DELETE FROM Personnel WHERE numMatriculePerso=:numMatriculePerso";
             $result = $this->_db->prepare($sql);
             $result->bindParam(":numMatriculePerso", $numMatriculePerso, PDO::PARAM_STR);
             return $result->execute();

@@ -112,7 +112,6 @@ class PersonnelCtrl extends MotherCtrl
                         $_SESSION['adresse'] = $personnel->getAdressePerso();
                         $_SESSION['tel'] = $personnel->getTelPerso();
                         $_SESSION['mel'] = $personnel->getMelPerso();
-
                         header('Location: index.php');
                     }
                 }
@@ -134,4 +133,18 @@ class PersonnelCtrl extends MotherCtrl
         session_destroy();
         header('Location: index.php');
     }
+    
+    
+    public function delete(){
+        $numMatriculePerso = $_SESSION['matricule'] ?? "";
+        $objModel = new PersonnelModel();
+        if($numMatriculePerso != "" && $objModel->deletePersonnel($numMatriculePerso)){
+            session_destroy();
+            header("location: index.php?controller=user&action=login");
+        }else{
+            header("location: index.php?controller=error&action=error_403");
+        }
+    }
+
 }
+
