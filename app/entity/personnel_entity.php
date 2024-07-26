@@ -10,7 +10,9 @@ class Personnel extends Entity {
     private string $dateNaissancePerso;
     private string $adressePerso;
     private string $telPerso;
+    private string $nomComplet;
     private ?string $numService; // en référence à numService de Service (=null)
+
 
     public function getNomComplet(): string
     {

@@ -26,7 +26,7 @@ class RoleCtrl extends MotherCtrl
                 $personnelEntity->hydrate($personnel);
                 $personnelEntities[] = $personnelEntity;
             }
-            $this->_data['personnels'] = $personnelEntities;
+            $this->_data['personnels'] = $personnelEntities;    
         }
 
         $applicationModel = new ApplicationModel();
@@ -55,6 +55,7 @@ class RoleCtrl extends MotherCtrl
                     "roleApplicatifs" => $roleAppEntities
                 ];
                 $applicationEntities[] = $tempTable;
+                
             }
             $this->_data['applications'] = $applicationEntities;
         }
