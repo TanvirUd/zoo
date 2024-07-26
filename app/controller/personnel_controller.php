@@ -3,6 +3,24 @@ require_once('../app/controller/mother_controller.php');
 
 class PersonnelCtrl extends MotherCtrl
 {
+    //méthode pour afficher les noms complets des personnels dans le select
+    public function afficherNomsPersonnels()
+    {
+        require_once("personnel_model.php");
+        $personnelModel = new PersonnelModel();
+        $fullNames = $personnelModel->getPersonnelByFullName();
+
+        // construction du select pour afficher les noms du personnel
+        $selectNomsPersonnel = "";
+
+        foreach ($fullNames as $personnel) {
+            $selectNomsPersonnel .= '<option>' . htmlspecialchars($personnel['fullName']) . '</option>';
+        }
+        $this->_data['selectNomsPersonnel'] = $selectNomsPersonnel;
+        $this->_data['page'] = 'affectationrole';
+        $this->render();
+    }
+
     public function inscription()
     {
         $this->_data['title'] = 'Inscription';
