@@ -25,7 +25,6 @@ class HomeCtrl extends MotherCtrl
                 $roleAppEntity->hydrate($roleApplicatif);  
                 $roleAppEntities[] = $roleAppEntity;            
             }
-
             $this->_data['roleApplicatifs'] = $roleAppEntities;
         }else{
             $errors[] = "Il n'y a pas de role applicatif";

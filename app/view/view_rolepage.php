@@ -103,54 +103,23 @@
             <!-- corps du tableau -->
             <tbody class="table-group-divider">
               <!-- éléments du corps -->
-              <!-- <tr>
-                        <th scope="row " >animaux_coordinateur</th>
-                          <td>Gestion du parc Animalier</td>
-                          <td>BdAnimaux</td>
-                          <td>
-                            <input class="btn btn-primary fw-bold" type="submit" value="Modifier">
-                            <input class="btn btn-danger fw-bold" type="submit" value="Supprimer">
-                          </td>
-                      </tr>
-
-                      <tr>
-                        <th scope="row " >animaux_developpeur</th>
-                          <td>Gestion du parc Animalier</td>
-                          <td>BdAnimaux</td>
-                        <td>
-                          <input class="btn btn-primary fw-bold" type="submit" value="Modifier">
-                          <input class="btn btn-danger fw-bold" type="submit" value="Supprimer">
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <th scope="row " >animaux_reception</th>
-                          <td>Gestion des ateliers</td>
-                          <td>BdAteliers</td>
-                        <td>
-                          <input class="btn btn-primary fw-bold" type="submit" value="Modifier">
-                          <input class="btn btn-danger fw-bold" type="submit" value="Supprimer">
-                        </td>
-                      </tr> -->
-
-              <?php
-
-              $roleApplicatifs = [
-                ['idAppli' => '1', 'idRoleAppli' => 'animaux_coordinateur', 'bdd' => 'BdAnimaux'],
-                ['idAppli' => '2', 'idRoleAppli' => 'animaux_stagiaire', 'bdd' => 'BdAnimaux'],
-              ] ?>
-              <?php foreach ($roleApplicatifs as $role) : ?>
+              <?php if (isset($this->_data['roleApplicatifs']) && is_array($this->_data['roleApplicatifs'])): ?>
+                <?php foreach ($this->_data['roleApplicatifs'] as $applicationData): ?>
+                  <?php
+                     $roleId = $applicationData->getIdAppli();
+                     $roleName = $applicationData->getIdRoleAppli();
+                  ?>
                 <tr>
-                  <th scope="row"><?php echo htmlspecialchars($role['idAppli']); ?></th>
-                  <td><?php echo htmlspecialchars($role['idRoleAppli']); ?></td>
-                  <td><?php echo htmlspecialchars($role['bdd']); ?></td>
+                  <th scope="row"><?php echo $roleId; ?></th>
+                  <td><?php echo $roleName; ?></td>
+                  <td><?php echo ('bdd'); ?></td>
                   <td>
                     <button class="btn btn-primary fw-bold" type="button">Modifier</button>
                     <button class="btn btn-danger fw-bold" type="button">Supprimer</button>
                   </td>
                 </tr>
-              <?php endforeach; ?>
-
+                <?php endforeach; ?>
+              <?php endif; ?>
             </tbody>
           </table>
         </div>
