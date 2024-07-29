@@ -51,17 +51,17 @@ class RoleApplicatifModel extends PdoModel
         }
     }
 
-    public function createRoleApplicatif($id, $roleAppli, $mdp) {
-        $idAppli = $id; // en référence à idAppli de Application
-        $idRoleAppli = $roleAppli;
-        $mdpRoleAppli = $mdp;
+    public function createRoleApplicatif($idAppli, $nomRole, $mdpRoleAppli) {
+        $idAppli = $_POST['idAppli'];
+        $nomRole = htmlentities($_POST['nomRole']);
+        $mdpRoleAppli = htmlentities($_POST['mdpAppli']);
 
         try{
-            $sql = "INSERT INTO RoleApplicatif(idRoleAppli, mdpRoleAppli) 
-            VALUES (:idRoleAppli, :mdpRoleAppli);";
+            $sql = "INSERT INTO RoleApplicatif(idAppli, idRoleAppli, mdpRoleAppli) 
+            VALUES (:idAppli, :idRoleAppli, :mdpRoleAppli);";
             $result = $this->_db->prepare($sql);
             $result->bindParam(":idAppli", $idAppli, PDO::PARAM_INT);
-            $result->bindParam(":idRoleAppli", $idRoleAppli, PDO::PARAM_STR);
+            $result->bindParam(":idRoleAppli", $nomRole, PDO::PARAM_STR);
             $result->bindParam(":mdpRoleAppli", $mdpRoleAppli, PDO::PARAM_STR);
             return $result->execute();
         } catch (PDOException $e){
