@@ -16,7 +16,8 @@
                     <a class="nav-link" href="index.php?controller=personnel&action=connexion">Connexion</a> 
                 </div>
                 <?php if(isset($_SESSION['matricule'])) : ?>
-                    <div class="navbar-nav ms-auto">
+                    <div class="navbar-nav ms-auto ">
+                    <p class="nav-item m-2"> Bonjour, <?= $_SESSION['prenom']. " ". $_SESSION['nom']." !"?> </p>
                     <a class="btn btn-danger fw-semibold " href="index.php?controller=personnel&action=deconnexion" role="button">Deconnexion</a>
                     </div>
                 <?php endif; ?>
