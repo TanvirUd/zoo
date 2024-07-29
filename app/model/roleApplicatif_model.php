@@ -69,13 +69,14 @@ class RoleApplicatifModel extends PdoModel
         }
     }
 
-    public function updateRoleApplicatif($idAppli) {
-        $roleAppli = $_POST['']??""; //insérer contenu form
-        $mdpRoleAppli = $_POST['']??""; //insérer contenu form
+    public function updateRoleApplicatif($idAppli, $nomRole, $mdpRoleAppli) {
+        $idAppli = $_POST['idAppli'];
+        $nomRole = $_POST['nomRole']??""; //insérer contenu form
+        $mdpRoleAppli = $_POST['mdpAppli']??""; //insérer contenu form
         $flag = false;
         try{
             $sql = "UPDATE RoleApplicatif SET ";
-            if($roleAppli != ""){
+            if($nomRole != ""){
                 if($flag){
                     $sql .= ", ";
                 }
@@ -88,15 +89,21 @@ class RoleApplicatifModel extends PdoModel
                 }
                 $sql .= "mdpRoleAppli=:mdpRoleAppli ";
             }
-            $sql .= "WHERE idAppli=:idAppli";
+            if($idAppli != ""){
+                if($flag){
+                    $sql .= ", ";
+                }
+                $sql .= "idAppli=:idAppli ";
+            }
+            $sql .= "WHERE nomRole=:nomRole";
             $result = $this->_db->prepare($sql);
             if($mdpRoleAppli != ""){
                 $result->bindParam(":mdpPerso", $mdpRoleAppli, PDO::PARAM_STR);
             }
-            if($roleAppli != ""){
-                $result->bindParam(":mdpPerso", $roleAppli, PDO::PARAM_STR);
+            if($nomRole != ""){
+                $result->bindParam(":idAppli", $idAppli, PDO::PARAM_STR);
             }
-            $result->bindParam(":idAppli", $idAppli, PDO::PARAM_STR);
+            $result->bindParam(":nomRole", $nomRole, PDO::PARAM_STR);
             return $result->execute();
         } catch (PDOException $e){
             die('Erreur : '. $e->getMessage());
