@@ -62,33 +62,31 @@
                                         'reservation' => 'reservation',
                                     ];
 
-                                foreach ($table as $key => $value) {
-                                    $value = $key;
-                                    echo "<tr>
-                           <th scope='row ' >$value</th>
-                           <td>
-                               <div class='form-check form-switch'>
-                                   <input class='form-check-input' type='checkbox' role='switch' id='switchDelete'>   
-                               </div>
-                           </td>
-                           <td>
-                               <div class='form-check form-switch'>
-                                   <input class='form-check-input' type='checkbox' role='switch' id='switchInsert'>           
-                               </div>
-                           </td>
-                           <td>
-                               <div class='form-check form-switch'>
-                                   <input class='form-check-input' type='checkbox' role='switch' id='switchSelect'>
-                               </div>
-                           </td>
-                           <td>
-                               <div class='form-check form-switch'>
-                                   <input class='form-check-input' type='checkbox' role='switch' id='switchUpdate'>   
-                               </div>
-                           </td>
-                       </tr>";
-                                }
-                                ?>
+                                foreach ($table as $key => $value) : ?>
+                                    <tr>
+                                        <th scope='row ' ><?=$value?></th>
+                                            <td>
+                                                <div class='form-check form-switch'>
+                                                    <input class='form-check-input' type='checkbox' role='switch' id='<?=$key?>Delete'>   
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class='form-check form-switch'>
+                                                    <input class='form-check-input' type='checkbox' role='switch' id='<?=$key?>Insert'>           
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class='form-check form-switch'>
+                                                    <input class='form-check-input' type='checkbox' role='switch' id='<?=$key?>Select'>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class='form-check form-switch'>
+                                                    <input class='form-check-input' type='checkbox' role='switch' id='<?=$key?>Update'>   
+                                                </div>
+                                            </td>
+                                    </tr>
+                                <?php endforeach ?>
                             </tbody>
                         </table>
                     </div>
