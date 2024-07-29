@@ -4,10 +4,10 @@
         <h2 class="text-center mb-4">Créer un compte</h2>
 
         <?php
-            if (isset($error)) 
+            if (isset($errors)) 
             {
             echo '<div class="alert alert-danger" role="alert">';
-            echo $error;
+            echo $errors[0];
             echo '</div>';
             }
         ?>
