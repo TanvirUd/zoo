@@ -103,23 +103,28 @@
             <!-- corps du tableau -->
             <tbody class="table-group-divider">
               <!-- éléments du corps -->
-              <?php if (isset($this->_data['roleApplicatifs']) && is_array($this->_data['roleApplicatifs'])): ?>
-                <?php foreach ($this->_data['roleApplicatifs'] as $applicationData): ?>
-                  <?php
-                     $roleId = $applicationData->getIdAppli();
-                     $roleName = $applicationData->getIdRoleAppli();
-                  ?>
-                <tr>
-                  <th scope="row"><?php echo $roleId; ?></th>
-                  <td><?php echo $roleName; ?></td>
-                  <td><?php echo ('bdd'); ?></td>
-                  <td>
-                    <button class="btn btn-primary fw-bold" type="button">Modifier</button>
-                    <button class="btn btn-danger fw-bold" type="button">Supprimer</button>
-                  </td>
-                </tr>
-                <?php endforeach; ?>
-              <?php endif; ?>
+                <?php if (isset($this->_data['roleApplicatifs']) && is_array($this->_data['roleApplicatifs'])): ?>
+                  <?php foreach ($this->_data['roleApplicatifs'] as $applicationData): ?>
+                      <?php
+                        $roleId = $applicationData->getIdAppli();
+                        $roleName = $applicationData->getIdRoleAppli();
+                      ?>
+                    <tr>
+                      <th scope="row"><?php echo $roleId; ?></th>
+                      <td><?php echo $roleName; ?></td>
+                      <td><?php echo ('bdd'); ?></td>
+                      <td>
+                        <form method="post" action="index.php?controller=RoleApplicatif&action=updateRole">
+                          <button class="btn btn-primary fw-bold" type="button">Modifier</button>
+                        </form>
+                        <form method="post" action="index.php?controller=RoleApplicatif&action=deleteRole">
+                          <input type="hidden" name="roleName" value="<?php echo $roleName; ?>">
+                          <button class="btn btn-danger fw-bold" type="submit">Supprimer</button>
+                        </form>
+                      </td>
+                    </tr>
+                  <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
           </table>
         </div>

@@ -74,11 +74,11 @@ class RoleApplicatifModel extends PdoModel
         }
     }
 
-    public function deleteRoleApplicatif($id) {
+    public function deleteRoleApplicatif($idAppli) {
         try {
-            $sql = "DELETE FROM RoleApplicatif WHERE idAppli = :idAppli";
+            $sql = "DELETE FROM RoleApplicatif WHERE idRoleAppli = :idRoleAppli";
             $stmt = $this->_db->prepare($sql);
-            $stmt->bindParam(':idAppli', $idAppli, PDO::PARAM_INT);
+            $stmt->bindParam(':idRoleAppli', $idAppli, PDO::PARAM_STR);
             return $stmt->execute();
             } catch (PDOException $e){
         die('Erreur : '. $e->getMessage());
