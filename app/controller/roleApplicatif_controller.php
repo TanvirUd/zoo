@@ -4,7 +4,13 @@ require_once('../app/controller/mother_controller.php');
 class RoleApplicatifCtrl extends MotherCtrl
 {
 
-    // http://primary.mshome.net/index.php?controller=roleApplicatif&action=affectRole
+    
+    /**
+     * Retrieves all personnel and application entities and assigns them to the view data.
+     *
+     * @throws Exception if an error occurs while retrieving personnel or application entities.
+     * @return void
+     */
     public function affectRole()
     {
         require_once("../app/model/personnel_model.php");
@@ -70,6 +76,19 @@ class RoleApplicatifCtrl extends MotherCtrl
         $this->render();
     }
 
+    /**
+     * Handles the POST request for role assignment.
+     *
+     * This function is responsible for processing the POST request when a user submits the role assignment form.
+     * It retrieves the selected role and application from the POST data and performs the necessary actions based on the selected role.
+     * If the selected role is "delete", it removes the user's role for the selected application.
+     * If the selected role is not "delete", it checks if the user already has a role for the selected application.
+     * If the user has a role, it updates the user's role for the selected application.
+     * If the user does not have a role, it assigns the selected role to the user for the selected application.
+     *
+     * @throws None
+     * @return None
+     */
     public function affectRolePost()
     {
         require_once("../app/model/estHabilite_model.php");
@@ -127,6 +146,12 @@ class RoleApplicatifCtrl extends MotherCtrl
         $this->render();
     }
 
+    /**
+     * Creates a new role applicatif with the given ID, name, and password.
+     *
+     * @return void
+     * @throws Exception if there is an error creating the role applicatif
+     */
     public function createRole()
     {
         $idAppli = $_POST['idAppli'];
@@ -148,6 +173,12 @@ class RoleApplicatifCtrl extends MotherCtrl
     }
 
 
+    /**
+     * Deletes a role applicatif based on the provided ID.
+     *
+     * @return void
+     * @throws Exception if the deletion fails or if the ID is empty
+     */
     public function deleteRole()
     {
         $idAppli = $_POST['roleName'] ?? '';

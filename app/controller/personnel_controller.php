@@ -3,6 +3,25 @@ require_once('../app/controller/mother_controller.php');
 
 class PersonnelCtrl extends MotherCtrl
 {
+    /**
+     * Handles the registration process for a new user.
+     *
+     * This function is responsible for handling the registration process for a new user. It first sets the title of the page to 'Inscription'.
+     * It then initializes an empty array to store any errors that may occur during the registration process.
+     * 
+     * The function retrieves the user input from the POST request and assigns it to the respective variables.
+     * It then assigns the user input to the corresponding properties of the $_data array.
+     * 
+     * If the POST request contains data, the function checks if all the required fields are filled. If any field is empty, an error message is added to the $errors array.
+     * If all the fields are filled correctly, the function checks if the email already exists in the database. If the email exists, an error message is added to the $errors array.
+     * If the email does not exist in the database, the function creates a new personnel record using the personnel_model.
+     * If the personnel record is created successfully, the function redirects the user to the appropriate page based on the session status.
+     * If the personnel record creation fails, an error message is added to the $errors array.
+     * 
+     * If there are any errors, the function assigns the errors to the $_data['errors'] property and renders the signup page.
+     *
+     * @return void
+     */
     public function inscription()
     {
         $this->_data['title'] = 'Inscription';
@@ -75,6 +94,16 @@ class PersonnelCtrl extends MotherCtrl
         $this->render();
     }
 
+    /**
+     * Handles the login process for the application.
+     *
+     * This function validates the user's email and password, checks if the email exists in the database,
+     * and if the user is authorized to access the application. If all validations pass, the user's session
+     * is updated with their information and they are redirected to the index page. If any validation fails,
+     * an error message is added to the data array and the login page is rendered.
+     *
+     * @return void
+     */
     public function connexion()
     {
         $this->_data['title'] = 'login';
@@ -141,6 +170,11 @@ class PersonnelCtrl extends MotherCtrl
         $this->render();
     }
 
+    /**
+     * Destroys the current session and redirects to the index.php page.
+     *
+     * @return void
+     */
     public function deconnexion()
     {
         session_destroy();
@@ -148,6 +182,12 @@ class PersonnelCtrl extends MotherCtrl
     }
     
     
+    /**
+     * Deletes a personnel record from the database and logs the user out.
+     *
+     * @return void
+     * @throws None
+     */
     public function delete(){
         $numMatriculePerso = $_SESSION['matricule'] ?? "";
         $objModel = new PersonnelModel();

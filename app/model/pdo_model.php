@@ -7,6 +7,11 @@ class PdoModel{
     
     protected PDO $_db;
 
+    /**
+     * Constructs a new instance of the class and establishes a connection to the database.
+     *
+     * @throws PDOException If there is an error with the database connection.
+     */
     public function __construct(){
         try {
             $options = [
