@@ -6,9 +6,9 @@
 
         <!-- affichage message d'erreur -->
         <?php
-        if (isset($error)) {
+        if (isset($errors)) {
           echo '<div class="alert alert-danger" role="alert">';
-          echo $error;
+          echo $errors[0];
           echo '</div>';
         }
         ?>
