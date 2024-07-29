@@ -91,15 +91,16 @@
         <select class="form-select" id="idAppli" name="idAppli" required>
           <option value="" selected disabled>Choisissez une application et un rôle</option>
           <?php if (isset($roleApplicatifs) && is_array($roleApplicatifs)): ?>
+                <?php $tempTable = array(); ?>
                 <?php foreach ($roleApplicatifs as $applicationData): ?>
                     <?php
-                        $roleName = $applicationData['roleApplicatifs']->getIdRoleAppli();
                         $dbName = $applicationData['application']->getNomAppli();
                         $roleId = $applicationData['roleApplicatifs']->getIdAppli();
+                        $tempTable[$roleId] = $dbName;
                     ?>
-                    <option value="<?php echo $roleId; ?>">
-                        <?php echo $dbName; ?> - <?php echo $roleName; ?>
-                    </option>
+                <?php endforeach; ?>
+                <?php foreach (array_unique($tempTable) as $key => $value): ?>
+                    <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
                 <?php endforeach; ?>
             <?php endif; ?>
         </select>
