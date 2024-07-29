@@ -11,16 +11,20 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary mb-5 fw-semibold">
         <div class="container-fluid">
+            <a class="navbar-brand" href="#">Lama Zoo</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
             <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
                 <div class="navbar-nav ms-auto">
-                <?php
+                    <?php
                     // Récupère l'URL actuelle
                     $currentUrl = basename($_SERVER['REQUEST_URI']);
                     ?>
                     <?php if (isset($_SESSION['matricule'])) : ?>
                         <a class="nav-link <?= $currentUrl == 'index.php' ? 'active' : '' ?>" aria-current="page" href="index.php">Gestion des rôles</a>
                         <a class="nav-link <?= $currentUrl == 'index.php?controller=Role&action=permissions' ? 'active' : '' ?>" href="index.php?controller=Role&action=permissions">Définition des droits</a>
-                        <a class="nav-link <?= $currentUrl == 'index.php?controller=Role&action=affectRole' ? 'active' : '' ?>"  href="index.php?controller=Role&action=affectRole">Affectation des rôles</a>
+                        <a class="nav-link <?= $currentUrl == 'index.php?controller=Role&action=affectRole' ? 'active' : '' ?>" href="index.php?controller=Role&action=affectRole">Affectation des rôles</a>
                     <?php endif; ?>
                 </div>
                 <?php if (isset($_SESSION['matricule'])) : ?>
@@ -32,5 +36,3 @@
             </div>
         </div>
     </nav>
-
-    

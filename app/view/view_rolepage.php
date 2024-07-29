@@ -56,13 +56,16 @@
                       <td><?php echo $dbName; ?></td>
                       <td><?php echo $appDb; ?></td>
                       <td>
+                        <div class="d-flex">
                         <form method="post" action="index.php?controller=RoleApplicatif&action=updateRole">
-                          <button class="btn btn-primary fw-bold" type="button">Modifier</button>
+                          <button class="btn btn-primary fw-bold me-2 " type="button">Modifier</button>
                         </form>
                         <form method="post" action="index.php?controller=RoleApplicatif&action=deleteRole">
                           <input type="hidden" name="roleName" value="<?php echo $roleName; ?>">
                           <button class="btn btn-danger fw-bold" type="submit">Supprimer</button>
                         </form>
+                        </div>
+                    
                       </td>
                     </tr>
                   <?php endforeach; ?>
