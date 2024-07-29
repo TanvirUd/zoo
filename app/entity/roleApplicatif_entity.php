@@ -1,11 +1,23 @@
 <?php
 require_once("../app/entity/mother_entity.php");
+require_once("../app/entity/application_entity.php");
 
 class RoleApplicatif extends Entity
 {
     private int $idAppli; // en référence à idAppli de Application
     private string $idRoleAppli;
     private string $mdpRoleAppli;
+   // private Application $application;
+
+    // public function getApplication(): Application
+    // {
+    //     return $this->application;
+    // }
+
+    // public function setApplication(array $application): void
+    // {
+    //     $this->application = New application($application['idAppli'], $application['nomAppli'], $application['dbAppli']);
+    // }
     
     /**
      * Get the value of idAppli

@@ -27,7 +27,7 @@ class ApplicationModel extends PDOModel
             die('Erreur : ' . $e->getMessage());
         }
     }
-
+  
     public function getAllApplication()
     {
         try {
