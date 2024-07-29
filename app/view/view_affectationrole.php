@@ -17,20 +17,23 @@
             <div class="input-group">
               <label for="nomPerso" class="input-group-text">Sélectionner un membre du personnel</label>
               <select class="form-select" aria-label="Default select example" name="nomPerso">
-              <?php
+                <?php
                 if (isset($this->_data['personnels']) && is_array($this->_data['personnels'])) {
-                    foreach ($this->_data['personnels'] as $personnel) {
-                        $fullName = $personnel->getNomComplet();
-                        $numMatricule = $personnel->getNumMatriculePerso();
-                        echo "<option value='$numMatricule'>$fullName</option>";
-                    }
+                  foreach ($this->_data['personnels'] as $personnel) {
+                    $fullName = $personnel->getNomComplet();
+                    $numMatricule = $personnel->getNumMatriculePerso();
+                    echo "<option value='$numMatricule'>$fullName</option>";
+                  }
                 } else {
-                    echo "<option value=''>Aucun personnel disponible</option>";
+                  echo "<option value=''>Aucun personnel disponible</option>";
                 }
                 ?>
               </select>
+
+            <!-- redirection vers formulaire d'inscription -->
             </div>
-          </div>
+              <a class="btn btn-success mt-3" type="button" href="index.php?controller=personnel&action=inscription">Ajouter un personnel</a>
+            </div>
 
           <div class="table-responsive table-responsive-md">
             <!-- tableau -->
@@ -46,45 +49,44 @@
               <!-- ELEMENTS A DYNAMISER -->
               <!-- corps du tableau -->
               <tbody class="table-group-divider">
-              <?php if (isset($this->_data['applications']) && is_array($this->_data['applications'])): ?>
-                <?php foreach ($this->_data['applications'] as $applicationData): ?>
-                  <?php
+                <?php if (isset($this->_data['applications']) && is_array($this->_data['applications'])) : ?>
+                  <?php foreach ($this->_data['applications'] as $applicationData) : ?>
+                    <?php
                     $application = $applicationData['application'];
                     $nomAppli = $application->getNomAppli();
-                  ?>
-                  <!-- éléments du corps -->
-                <tr>
-                  <th scope="row "><?php echo htmlspecialchars($nomAppli); ?></th>
-                  <td>
-                  <select class="form-select" aria-label="Default select example" name="nomAppli:<?=$application->getIdAppli()?>">
-                    
-                    <?php
-                    if (isset($this->_data['applications']) && is_array($this->_data['applications'])) {
-                        echo "<option value=\"none\">Rien n'est sélectionné</option>";
-                        foreach ($applicationData['roleApplicatifs'] as $role) {
-                            $roleId = $role->getIdAppli();
-                            $roleName = $role->getIdRoleAppli();
-                            echo "<option value='" .htmlspecialchars($roleId).":".htmlspecialchars($roleName). "'>" . htmlspecialchars($roleName) . "</option>";
-                        }
-                        echo "<option value=\"" .htmlspecialchars($roleId).":delete\">Aucun rôle</option>";
-                    } else {
-                        echo "<option value=''>Aucun role disponible</option>";
-                    }
                     ?>
-                </select>
-                  </td>
-                </tr>
-                <?php endforeach; ?>
-              <?php else: ?>
+                    <!-- éléments du corps -->
+                    <tr>
+                      <th scope="row "><?php echo htmlspecialchars($nomAppli); ?></th>
+                      <td>
+                        <select class="form-select" aria-label="Default select example" name="nomAppli:<?= $application->getIdAppli() ?>">
+
+                          <?php
+                          if (isset($this->_data['applications']) && is_array($this->_data['applications'])) {
+                            echo "<option value=\"none\">Rien n'est sélectionné</option>";
+                            foreach ($applicationData['roleApplicatifs'] as $role) {
+                              $roleId = $role->getIdAppli();
+                              $roleName = $role->getIdRoleAppli();
+                              echo "<option value='" . htmlspecialchars($roleId) . ":" . htmlspecialchars($roleName) . "'>" . htmlspecialchars($roleName) . "</option>";
+                            }
+                            echo "<option value=\"" . htmlspecialchars($roleId) . ":delete\">Aucun rôle</option>";
+                          } else {
+                            echo "<option value=''>Aucun role disponible</option>";
+                          }
+                          ?>
+                        </select>
+                      </td>
+                    </tr>
+                  <?php endforeach; ?>
+                <?php else : ?>
                   <tr>
-                      <td colspan="2">Aucune application disponible</td>
+                    <td colspan="2">Aucune application disponible</td>
                   </tr>
-              <?php endif; ?>
-                 <!-- Fin éléments du corps -->
+                <?php endif; ?>
+                <!-- Fin éléments du corps -->
               </tbody>
             </table>
             <button class="btn btn-primary" type="submit">Valider</button>
-
           </div>
         </div>
       </div>
