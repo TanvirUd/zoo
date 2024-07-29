@@ -50,6 +50,20 @@ class estHabiliteModel extends PdoModel
         }
     }
 
+    public function checkIfAdmin(string $numMatriculePerso) {
+        try {
+            $sqlQuery="SELECT idAppli FROM EstHabilite WHERE numMatriculePerso=:numMatriculePerso AND idRoleAppli='bdauthentification'";
+            $stmt = $this->_db->prepare($sqlQuery);
+            $stmt->bindParam(':numMatriculePerso', $numMatriculePerso, PDO::PARAM_STR);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result != false;         
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            throw new Exception("Une erreur s'est produite : ".$e->getMessage());
+        }
+    }
+
     public function updateHabilitesPourPersonnel(string $numMatriculePerso, int $idAppli, string $idRoleAppli) {
         try {
             $sqlQuery="UPDATE EstHabilite SET idRoleAppli=:idRoleAppli WHERE numMatriculePerso=:numMatriculePerso AND idAppli=:idAppli";

@@ -22,6 +22,10 @@ class RoleApplicatifModel extends PdoModel
         }
     }
 
+    public function getRolesByUserId($idUser) {
+        
+    }
+
     public function createRoleApplicatif($id, $roleAppli, $mdp) {
         $idAppli = $id; // en référence à idAppli de Application
         $idRoleAppli = $roleAppli;
