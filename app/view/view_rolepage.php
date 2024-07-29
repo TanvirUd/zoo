@@ -32,8 +32,8 @@
             <thead>
               <tr>
                 <!-- noms des colonnes -->
-                <th>Nom de l'application</th>
                 <th>Identifiant du rôle applicatif</th>
+                <th>Nom de l'application</th>
                 <th>BDD de l'application</th>
                 <th>Action</th>
               </tr>
@@ -80,21 +80,26 @@
 <!-- formulaire popover pour ajout d'un ouveau rôle applicatif -->
 <div class="container mt-6" id="ajouter" popover>
   <h3 class="mb-4 text-center">Ajouter un nouveau rôle applicatif</h3>
-  <form action="index.php?controller=role&action=addNewRole" method="POST">
+  <form action="index.php?controller=roleApplicatif&action=createRole" method="POST">
     <div class="container mt-5 text-center">
       <div class="row mb-3">
-        <label for="nomApplication" class="col-form-label col-lg-3 text-start">Nom de l'Application</label>
+        <label for="idAppli" class="col-form-label col-lg-3 text-start">Nom de l'Application</label>
         <div class="col-lg-4">
-          <select class="form-select" id="nomApplication" name="nomApplication" required>
-            <option value="" selected disabled>Choisissez une application</option>
-            <?php
-            //test d'applications
-            $applications = ['Gestion du parc animalier', 'Gestion des ateliers', 'Gestion des hébergements'];
-            foreach ($applications as $app) {
-              echo "<option value=\"$app\">$app</option>";
-            }
-            ?>
-          </select>
+        <select class="form-select" id="idAppli" name="idAppli" required>
+          <option value="" selected disabled>Choisissez une application et un rôle</option>
+          <?php if (isset($roleApplicatifs) && is_array($roleApplicatifs)): ?>
+                <?php foreach ($roleApplicatifs as $applicationData): ?>
+                    <?php
+                        $roleName = $applicationData['roleApplicatifs']->getIdRoleAppli();
+                        $dbName = $applicationData['application']->getNomAppli();
+                        $roleId = $applicationData['roleApplicatifs']->getIdAppli();
+                    ?>
+                    <option value="<?php echo $roleId; ?>">
+                        <?php echo $dbName; ?> - <?php echo $roleName; ?>
+                    </option>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </select>
         </div>
       </div>
 
@@ -106,18 +111,9 @@
       </div>
 
       <div class="row mb-3">
-        <label for="bddApplication" class="col-form-label col-lg-3 text-start">Base de Données de l'Application</label>
+        <label for="bddApplication" class="col-form-label col-lg-3 text-start">Mot de passe de l'Application</label>
         <div class="col-lg-4">
-          <select class="form-select" id="bddApplication" name="bddApplication" required>
-            <!-- choix de base de données -->
-            <option value="" selected disabled>Choisissez une base de données</option>
-            <?php
-            $databases = ['BdAnimaux', 'BdAteliers', 'BdHotellerie'];
-            foreach ($databases as $db) {
-              echo "<option value=\"$db\">$db</option>";
-            }
-            ?>
-          </select>
+          <input type="text" class="form-control" id="mdpAppli" name="mdpAppli" placeholder="Mot de passe" required>
         </div>
       </div>
 
