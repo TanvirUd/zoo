@@ -32,8 +32,8 @@
             <thead>
               <tr>
                 <!-- noms des colonnes -->
-                <th>Identifiant du rôle applicatif</th>
                 <th>Nom de l'application</th>
+                <th>Identifiant du rôle applicatif</th>
                 <th>BDD de l'application</th>
                 <th>Action</th>
               </tr>
@@ -42,16 +42,19 @@
             <!-- corps du tableau -->
             <tbody class="table-group-divider">
               <!-- éléments du corps -->
-                <?php if (isset($this->_data['roleApplicatifs']) && is_array($this->_data['roleApplicatifs'])): ?>
-                  <?php foreach ($this->_data['roleApplicatifs'] as $applicationData): ?>
+                <?php if (isset($roleApplicatifs) && is_array($roleApplicatifs)): ?>
+                  <?php foreach ($roleApplicatifs as $applicationData): ?>
+                    
                       <?php
-                        $roleId = $applicationData->getIdAppli();
-                        $roleName = $applicationData->getIdRoleAppli();
+                        $roleId = $applicationData['roleApplicatifs']->getIdAppli();
+                        $roleName = $applicationData['roleApplicatifs']->getIdRoleAppli();
+                        $appDb = $applicationData['application']->getDbAppli();
+                        $dbName = $applicationData['application']->getNomAppli();
                       ?>
                     <tr>
-                      <th scope="row"><?php echo $roleId; ?></th>
-                      <td><?php echo $roleName; ?></td>
-                      <td><?php echo ('bdd'); ?></td>
+                      <th scope="row"><?php echo $roleName; ?></th>
+                      <td><?php echo $dbName; ?></td>
+                      <td><?php echo $appDb; ?></td>
                       <td>
                         <form method="post" action="index.php?controller=RoleApplicatif&action=updateRole">
                           <button class="btn btn-primary fw-bold" type="button">Modifier</button>

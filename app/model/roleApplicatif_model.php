@@ -6,7 +6,18 @@ class RoleApplicatifModel extends PdoModel
         $sql = "SELECT * FROM RoleApplicatif";
         $result = $this->_db->prepare($sql);
         $result->execute();
-        return $result->fetchAll(PDO::FETCH_ASSOC);
+        $roles = $result->fetchAll(PDO::FETCH_ASSOC);
+        // $data = [];
+        // foreach ($roles as $role) {
+        //     $sql = "SELECT * FROM `Application` WHERE idAppli=:idAppli";
+        //     $result = $this->_db->prepare($sql);
+        //     $result->bindParam(":idAppli", $role['idAppli'], PDO::PARAM_INT);
+        //     $result->execute();
+        //     $role['application'] = $result->fetch();
+        //     $data[] = $role;
+        // }
+        // return $data;
+        return $roles;
     }
 
     public function getRolesByAppliId($idAppli) {
@@ -16,6 +27,24 @@ class RoleApplicatifModel extends PdoModel
             $result->bindParam(":idAppli", $idAppli, PDO::PARAM_INT);
             $result->execute();
             $role = $result->fetchAll();
+            return $role;
+        } catch (PDOException $e){
+            die('Erreur : '. $e->getMessage());
+        }
+    }
+
+    public function getBddByAppliId($idAppli) {
+        try{
+            $sql = "SELECT * FROM RoleApplicatif WHERE dbAppli=:dbAppli";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(":dbAppli", $idAppli, PDO::PARAM_STR);
+            $result->execute();
+            $role = $result->fetchAll();
+            $sql = "SELECT * FROM `Application` WHERE idAppli=:idAppli";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(":dbAppli", $idAppli, PDO::PARAM_INT);
+            $result->execute();
+            $role['application'] = $result->fetch();
             return $role;
         } catch (PDOException $e){
             die('Erreur : '. $e->getMessage());

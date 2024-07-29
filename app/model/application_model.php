@@ -16,6 +16,7 @@ class ApplicationModel extends PDOModel
         }
     }
 
+
     public function getAllApplication()
     {
         try {
