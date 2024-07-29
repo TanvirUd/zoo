@@ -12,8 +12,10 @@
             <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
                 <div class="navbar-nav ms-auto">
                     <a class="nav-link active" aria-current="page" href="index.php">Accueil</a>
+                <?php if(!isset($_SESSION['matricule'])) : ?>
                     <a class="nav-link" href="index.php?controller=personnel&action=inscription">Inscription</a>
-                    <a class="nav-link" href="index.php?controller=personnel&action=connexion">Connexion</a> 
+                    <a class="nav-link" href="index.php?controller=personnel&action=connexion">Connexion</a>
+                <?php endif; ?>
                 </div>
                 <?php if(isset($_SESSION['matricule'])) : ?>
                     <div class="navbar-nav ms-auto ">
