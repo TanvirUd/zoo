@@ -57,8 +57,8 @@
                       <td><?php echo $appDb; ?></td>
                       <td>
                         <div class="d-flex">
-                        <form method="post" action="index.php?controller=RoleApplicatif&action=updateRole">
-                          <button class="btn btn-primary fw-bold me-2 " type="button">Modifier</button>
+                        <form method="post" action="index.php?controller=RoleApplicatif&action=update">
+                          <button class="btn btn-primary fw-bold" popovertarget="changer" type="button" onclick="setRoleName('<?php echo $roleName; ?>')">Modifier</button>
                         </form>
                         <form method="post" action="index.php?controller=RoleApplicatif&action=deleteRole">
                           <input type="hidden" name="roleName" value="<?php echo $roleName; ?>">
@@ -85,46 +85,102 @@
   <h3 class="mb-4 text-center">Ajouter un nouveau rôle applicatif</h3>
   <form action="index.php?controller=roleApplicatif&action=createRole" method="POST">
     <div class="container mt-5 text-center">
-      <div class="row mb-3">
-        <label for="idAppli" class="col-form-label col-lg-3 text-start">Nom de l'Application</label>
-        <div class="col-lg-4">
-        <select class="form-select" id="idAppli" name="idAppli" required>
-          <option value="" selected disabled>Choisissez une application et un rôle</option>
-          <?php if (isset($roleApplicatifs) && is_array($roleApplicatifs)): ?>
-                <?php $tempTable = array(); ?>
-                <?php foreach ($roleApplicatifs as $applicationData): ?>
-                    <?php
-                        $dbName = $applicationData['application']->getNomAppli();
-                        $roleId = $applicationData['roleApplicatifs']->getIdAppli();
-                        $tempTable[$roleId] = $dbName;
-                    ?>
-                <?php endforeach; ?>
-                <?php foreach (array_unique($tempTable) as $key => $value): ?>
-                    <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </select>
-        </div>
-      </div>
+        <div class="row mb-3">
+          <label for="idAppli" class="col-form-label col-lg-3 text-start">Nom de l'Application</label>
+          <div class="col-lg-4">
+          <select class="form-select" id="idAppli" name="idAppli" required>
+            <option value="" selected disabled>Choisissez une application et un rôle</option>
+            <?php if (isset($roleApplicatifs) && is_array($roleApplicatifs)): ?>
+                  <?php foreach ($roleApplicatifs as $applicationData): ?>
+                      <?php
+                          $roleName = $applicationData['roleApplicatifs']->getIdRoleAppli();
+                          $dbName = $applicationData['application']->getNomAppli();
+                          $roleId = $applicationData['roleApplicatifs']->getIdAppli();
+                      ?>
+                      <option value="<?php echo $roleId; ?>">
+                          <?php echo $dbName; ?> - <?php echo $roleName; ?>
+                      </option>
+                  <?php endforeach; ?>
+              <?php endif; ?>
+          </select>
+          </div>
 
-      <div class="row mb-3">
-        <label for="nomRole" class="col-sm-3 col-form-label text-start">Saisir le nom du rôle</label>
-        <div class="col-lg-4">
-          <input type="text" class="form-control" id="nomRole" name="nomRole" placeholder="Nom du rôle" required>
         </div>
-      </div>
 
-      <div class="row mb-3">
-        <label for="bddApplication" class="col-form-label col-lg-3 text-start">Mot de passe de l'Application</label>
-        <div class="col-lg-4">
-          <input type="text" class="form-control" id="mdpAppli" name="mdpAppli" placeholder="Mot de passe" required>
+        <div class="row mb-3">
+          <label for="nomRole" class="col-sm-3 col-form-label text-start">Saisir le nom du rôle</label>
+          <div class="col-lg-4">
+            <input type="text" class="form-control" id="nomRole" name="nomRole" placeholder="Nom du rôle" required>
+          </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="col-lg-7">
-          <button type="submit" class="btn btn-primary">Ajouter</button>
+        <div class="row mb-3">
+          <label for="bddApplication" class="col-form-label col-lg-3 text-start">Mot de passe de l'Application</label>
+          <div class="col-lg-4">
+            <input type="text" class="form-control" id="mdpAppli" name="mdpAppli" placeholder="Mot de passe" required>
+          </div>
         </div>
-      </div>
+
+        <div class="row">
+          <div class="col-lg-7">
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+          </div>
+        </div>
+      </div> 
   </form>
 </div>
+
+<!-- formulaire popover pour ajout d'un ouveau rôle applicatif -->
+<div class="container mt-6" id="changer" popover>
+  <h3 class="mb-4 text-center">Modifier le rôle</h3>
+  <form action="index.php?controller=roleApplicatif&action=createRole" method="POST">
+    <div class="container mt-5 text-center">
+        <div class="row mb-3">
+          <label for="nomRole" class="col-sm-3 col-form-label text-start">Nom du rôle</label>
+          <div class="col-lg-4">
+          <input type="text" class="form-control" id="nomRole" name="nomRole" value="<?php echo $roleName; ?>" readonly>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label for="idAppli" class="col-form-label col-lg-3 text-start">Nom de l'Application</label>
+          <div class="col-lg-4">
+          <select class="form-select" id="idAppli" name="idAppli" required>
+            <option value="" selected disabled>Choisissez une application et un rôle</option>
+            <?php if (isset($roleApplicatifs) && is_array($roleApplicatifs)): ?>
+                  <?php foreach ($roleApplicatifs as $applicationData): ?>
+                      <?php
+                          $roleName = $applicationData['roleApplicatifs']->getIdRoleAppli();
+                          $dbName = $applicationData['application']->getNomAppli();
+                          $roleId = $applicationData['roleApplicatifs']->getIdAppli();
+                      ?>
+                      <option value="<?php echo $roleId; ?>">
+                          <?php echo $dbName; ?>
+                      </option>
+                  <?php endforeach; ?>
+              <?php endif; ?>
+          </select>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label for="bddApplication" class="col-form-label col-lg-3 text-start">Mot de passe de l'Application</label>
+          <div class="col-lg-4">
+            <input type="text" class="form-control" id="mdpAppli" name="mdpAppli" placeholder="Mot de passe" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-7">
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+          </div>
+        </div>
+      </div> 
+  </form>
+</div>
+
+<script>
+function setRoleName(roleName) {
+  document.getElementById('nomRole').value = roleName;
+}
+</script>

@@ -158,6 +158,8 @@ class RoleApplicatifCtrl extends MotherCtrl
         $nomRole = trim(htmlspecialchars($_POST['nomRole'] ?? ""));
         $mdpRoleAppli = trim(htmlspecialchars($_POST['mdpAppli'] ?? ""));
         if (!empty($idAppli) && !empty($nomRole) && !empty($mdpRoleAppli)) {
+            var_dump($idAppli);
+            die();
             require_once("../app/model/roleApplicatif_model.php");
             $roleModel = new RoleApplicatifModel();
             try {
