@@ -76,17 +76,31 @@ class RoleCtrl extends MotherCtrl
 
         if (isset($_POST) && count($_POST) > 0) {
             $numMatriculePerso = filter_var($_POST['nomPerso'])??"";
-            $dropSelect = explode(":", $_POST['nomAppli'])??"";
-            $idAppli = filter_var($dropSelect[0])??"";
-            $roleApplicatif = filter_var($dropSelect[1])??"";
+            foreach ($_POST as $key => $value) {
+                $selection = explode(":", $key);
 
-            if($numMatriculePerso == "" || $idAppli == "") {
-                $errors[] = "Veuillez renseigner tous les champs";
-            }
+                if ($selection[0] == "nomAppli" && $value != "none") {    
+                    $dropSelect = explode(":", $value)??"";
+                    $idAppli = filter_var($dropSelect[0])??"";
+                    $roleApplicatif = filter_var($dropSelect[1])??"";
 
-            if (count($errors) == 0) {
-                $estHabiliteModel = new EstHabiliteModel();
-                $estHabiliteModel->assignHabilitesPourPersonnel($numMatriculePerso, intval($idAppli), $roleApplicatif);
+                    if($numMatriculePerso == "" || $idAppli == "") {
+                        $errors['champs-vide'] = "Veuillez renseigner tous les champs";
+                    }else{
+                        $estHabiliteModel = new EstHabiliteModel();
+                        $checkUserRole = $estHabiliteModel->checkHabilitesByMatriculAndIdAppli($numMatriculePerso, $idAppli);
+
+                        if ($roleApplicatif == "delete") {
+                            $estHabiliteModel->removeHabilitesPourPersonnel($numMatriculePerso, intval($idAppli));
+                        } else {
+                            if ($checkUserRole) {
+                                $estHabiliteModel->updateHabilitesPourPersonnel($numMatriculePerso, intval($idAppli), $roleApplicatif);
+                            }else{
+                                $estHabiliteModel->assignHabilitesPourPersonnel($numMatriculePerso, intval($idAppli), $roleApplicatif);
+                            }                            
+                        }                       
+                    }
+                }
             }
         }
 
