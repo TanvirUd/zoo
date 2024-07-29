@@ -23,7 +23,18 @@ class HomeCtrl extends MotherCtrl
                 require_once("../app/entity/roleApplicatif_entity.php");
                 $roleAppEntity = new RoleApplicatif();
                 $roleAppEntity->hydrate($roleApplicatif);  
-                $roleAppEntities[] = $roleAppEntity;            
+                require_once("../app/model/application_model.php");
+                $applicationModel = new ApplicationModel;
+                $applicationBd = $applicationModel->getApplicationById($roleAppEntity->getIdAppli());
+                require_once("../app/entity/application_entity.php");
+                $applicationEntity = new Application;
+                $applicationEntity->hydrate($applicationBd);   
+
+                $tempTable = [
+                    "application" => $applicationEntity,
+                    "roleApplicatifs" => $roleAppEntity
+                ];
+                $roleAppEntities[] = $tempTable;
             }
             $this->_data['roleApplicatifs'] = $roleAppEntities;
         }else{

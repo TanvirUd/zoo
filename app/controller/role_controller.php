@@ -103,12 +103,6 @@ class RoleCtrl extends MotherCtrl
                 }
             }
         }
-
-        if (count($errors) > 0) {
-            $this->_data['errors'] = $errors;
-        }
-
-        $this->affectRole();
     }
 
     public function permissions()
