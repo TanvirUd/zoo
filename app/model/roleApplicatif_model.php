@@ -7,16 +7,6 @@ class RoleApplicatifModel extends PdoModel
         $result = $this->_db->prepare($sql);
         $result->execute();
         $roles = $result->fetchAll(PDO::FETCH_ASSOC);
-        // $data = [];
-        // foreach ($roles as $role) {
-        //     $sql = "SELECT * FROM `Application` WHERE idAppli=:idAppli";
-        //     $result = $this->_db->prepare($sql);
-        //     $result->bindParam(":idAppli", $role['idAppli'], PDO::PARAM_INT);
-        //     $result->execute();
-        //     $role['application'] = $result->fetch();
-        //     $data[] = $role;
-        // }
-        // return $data;
         return $roles;
     }
 
@@ -51,17 +41,17 @@ class RoleApplicatifModel extends PdoModel
         }
     }
 
-    public function createRoleApplicatif($idAppli, $nomRole, $mdpRoleAppli) {
-        $idAppli = $_POST['idAppli'];
-        $nomRole = htmlentities($_POST['nomRole']);
-        $mdpRoleAppli = htmlentities($_POST['mdpAppli']);
+    public function createRoleApplicatif($id, $roleAppli, $mdp) {
+        $idAppli = $id; // en référence à idAppli de Application
+        $idRoleAppli = $roleAppli;
+        $mdpRoleAppli = $mdp;
 
         try{
-            $sql = "INSERT INTO RoleApplicatif(idAppli, idRoleAppli, mdpRoleAppli) 
-            VALUES (:idAppli, :idRoleAppli, :mdpRoleAppli);";
+            $sql = "INSERT INTO RoleApplicatif(idRoleAppli, mdpRoleAppli) 
+            VALUES (:idRoleAppli, :mdpRoleAppli);";
             $result = $this->_db->prepare($sql);
             $result->bindParam(":idAppli", $idAppli, PDO::PARAM_INT);
-            $result->bindParam(":idRoleAppli", $nomRole, PDO::PARAM_STR);
+            $result->bindParam(":idRoleAppli", $idRoleAppli, PDO::PARAM_STR);
             $result->bindParam(":mdpRoleAppli", $mdpRoleAppli, PDO::PARAM_STR);
             return $result->execute();
         } catch (PDOException $e){
@@ -105,12 +95,16 @@ class RoleApplicatifModel extends PdoModel
 
     public function deleteRoleApplicatif($idAppli) {
         try {
+            $habil = "DELETE FROM EstHabilite WHERE idRoleAppli = :idRoleAppli";
+            $stmt = $this->_db->prepare($habil);
+            $stmt->bindParam(':idRoleAppli', $idAppli, PDO::PARAM_STR);
+            $stmt->execute();
             $sql = "DELETE FROM RoleApplicatif WHERE idRoleAppli = :idRoleAppli";
             $stmt = $this->_db->prepare($sql);
             $stmt->bindParam(':idRoleAppli', $idAppli, PDO::PARAM_STR);
             return $stmt->execute();
-            } catch (PDOException $e){
-        die('Erreur : '. $e->getMessage());
+        } catch (PDOException $e){
+            throw new RuntimeException("Database error: " . $e->getMessage());
         }
     }
 }

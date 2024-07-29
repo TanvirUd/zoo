@@ -23,8 +23,8 @@
                     ?>
                     <?php if (isset($_SESSION['matricule'])) : ?>
                         <a class="nav-link <?= $currentUrl == 'index.php' ? 'active' : '' ?>" aria-current="page" href="index.php">Gestion des rôles</a>
-                        <a class="nav-link <?= $currentUrl == 'index.php?controller=Role&action=permissions' ? 'active' : '' ?>" href="index.php?controller=Role&action=permissions">Définition des droits</a>
-                        <a class="nav-link <?= $currentUrl == 'index.php?controller=Role&action=affectRole' ? 'active' : '' ?>" href="index.php?controller=Role&action=affectRole">Affectation des rôles</a>
+                        <a class="nav-link <?= $currentUrl == 'index.php?controller=roleApplicatif&action=permissions' ? 'active' : '' ?>" href="index.php?controller=roleApplicatif&action=permissions">Définition des droits</a>
+                        <a class="nav-link <?= $currentUrl == 'index.php?controller=roleApplicatif&action=affectRole' ? 'active' : '' ?>" href="index.php?controller=roleApplicatif&action=affectRole">Affectation des rôles</a>
                     <?php endif; ?>
                 </div>
                 <?php if (isset($_SESSION['matricule'])) : ?>

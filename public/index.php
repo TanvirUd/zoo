@@ -10,8 +10,8 @@ if (isset($_SESSION['matricule'])) {
     $strMethod  = $_GET['action']??'homepage';
 
 } else {
-    $strCtrl    = $_GET['controller'] == 'faker' ? 'faker' : 'personnel';
-    $strMethod  = $_GET['controller'] == 'faker' ? $_GET['action'] : 'connexion';
+    $strCtrl    = isset($_GET['controller']) && $_GET['controller'] == 'faker' ? 'faker' : 'personnel';
+    $strMethod  = isset($_GET['controller']) && $_GET['controller'] == 'faker' ? $_GET['action'] : 'connexion';
 }
 
 if ($strCtrl == 'faker') {
