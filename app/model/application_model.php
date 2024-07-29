@@ -16,7 +16,18 @@ class ApplicationModel extends PDOModel
         }
     }
 
-
+    public function getApplicationByNameDb($nomDb){
+        try {
+            $sql = "SELECT * FROM Application WHERE dbAppli = :dbAppli";
+            $stmt = $this->_db->prepare($sql);
+            $stmt->bindParam(':dbAppli', $nomDb, PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetch();
+        } catch (PDOException $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+    }
+  
     public function getAllApplication()
     {
         try {

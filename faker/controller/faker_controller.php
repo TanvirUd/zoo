@@ -31,7 +31,8 @@ class FakerCtrl extends MotherCtrl
     {
         $nomAppli = [
             ['nomappli' => 'Gestion du parc Animalier', 'nomBdd' => 'BdAnimaux'],
-            ['nomappli' => 'Gestion des atteliers', 'nomBdd' => 'BdAtelier']
+            ['nomappli' => 'Gestion des atteliers', 'nomBdd' => 'BdAtelier'],
+            ['nomappli' => 'Gestion des autherntifiactions', 'nomBdd' => 'BdAuthentification']
         ];
 
         require_once('../app/model/application_model.php');
@@ -60,12 +61,40 @@ class FakerCtrl extends MotherCtrl
             $nomAppli = strtolower(substr($applicationEntity->getDbAppli(), 2));
 
             $roleApplicatifModel = new RoleApplicatifModel();
-            $roleApplicatifModel->createRoleApplicatif($idAppli, $nomAppli.'_coordinateur', 'coord');
-            echo 'Id de l\'application : ' . $idAppli . ' Role de l\'application ' . $nomAppli.'_coordinateur Mot de passe : coord' . '<br>';
-            $roleApplicatifModel->createRoleApplicatif($idAppli, $nomAppli.'_developpeur', 'devel');
-            echo 'Id de l\'application : ' . $idAppli . ' Role de l\'application ' . $nomAppli.'_developpeur Mot de passe : devel' . '<br>';
-            $roleApplicatifModel->createRoleApplicatif($idAppli, $nomAppli.'_superviseur', 'super');
-            echo 'Id de l\'application : ' . $idAppli . ' Role de l\'application ' . $nomAppli.'_superviseur Mot de passe : super' . '<br>';            
+            if ($nomAppli != 'BdAuthentification') {
+                $roleApplicatifModel->createRoleApplicatif($idAppli, $nomAppli.'_coordinateur', 'coord');
+                echo 'Id de l\'application : ' . $idAppli . ' Role de l\'application ' . $nomAppli.'_coordinateur Mot de passe : coord' . '<br>';
+                $roleApplicatifModel->createRoleApplicatif($idAppli, $nomAppli.'_developpeur', 'devel');
+                echo 'Id de l\'application : ' . $idAppli . ' Role de l\'application ' . $nomAppli.'_developpeur Mot de passe : devel' . '<br>';
+                $roleApplicatifModel->createRoleApplicatif($idAppli, $nomAppli.'_superviseur', 'super');
+                echo 'Id de l\'application : ' . $idAppli . ' Role de l\'application ' . $nomAppli.'_superviseur Mot de passe : super' . '<br>';                     
+            }       
+        }
+    }
+
+    public function createAdmin(){
+        require_once('../app/model/roleApplicatif_model.php');
+        require_once('../app/model/application_model.php');
+        require_once('../app/model/estHabilite_model.php');
+        require_once('../app/entity/application_entity.php');
+
+        $numMatricule = $_GET['numMatricule']??'';
+
+        $applicationModel = new ApplicationModel();
+        $application = $applicationModel->getApplicationByNameDb("BdAuthentification");
+
+        $applicationEntity = new Application();
+        $applicationEntity->hydrate($application);
+        $idAppli = $applicationEntity->getIdAppli();
+
+        $roleApplicatifModel = new RoleApplicatifModel();
+        $roleApplicatifModel->createRoleApplicatif($idAppli, "bdauthentification", 'BdAuthentification');
+
+        echo 'Id de l\'application : ' . $idAppli . ' Role de l\'application bdauthentification Mot de passe : BdAuthentification' . '<br>';
+
+        if ($numMatricule != '') {
+            $estHabiliteModel = new EstHabiliteModel();
+            $estHabiliteModel->assignHabilitesPourPersonnel($numMatricule, $idAppli, "bdauthentification");
         }
     }
 
@@ -74,5 +103,6 @@ class FakerCtrl extends MotherCtrl
         $this->createPersonnal();
         $this->createApplications();
         $this->createRoles();
+        $this->createAdmin();
     }
 }

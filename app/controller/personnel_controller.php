@@ -99,20 +99,30 @@ class PersonnelCtrl extends MotherCtrl
                 }
 
                 if(count($errors) == 0) {
+                    require_once("../app/model/estHabilite_model.php");
+                    $estHabiliteModel = new EstHabiliteModel();
+                }
+
+                if(count($errors) == 0) {
                     $user = $personnelModel->connectPersonnel();
                     if($user) {
                         require_once("../app/entity/personnel_entity.php");
+                        require_once("../app/model/estHabilite_model.php");
                         $personnel = new Personnel();
                         $personnel->hydrate($user);
 
-                        $_SESSION['matricule'] = $personnel->getNumMatriculePerso();
-                        $_SESSION['nom'] = $personnel->getNomPerso();
-                        $_SESSION['prenom'] = $personnel->getPrenomPerso();
-                        $_SESSION['dateNaissance'] = $personnel->getDateNaissancePerso();
-                        $_SESSION['adresse'] = $personnel->getAdressePerso();
-                        $_SESSION['tel'] = $personnel->getTelPerso();
-                        $_SESSION['mel'] = $personnel->getMelPerso();
-                        header('Location: index.php');
+                        if ($estHabiliteModel->checkIfAdmin($personnel->getNumMatriculePerso())) {
+                            $_SESSION['matricule'] = $personnel->getNumMatriculePerso();
+                            $_SESSION['nom'] = $personnel->getNomPerso();
+                            $_SESSION['prenom'] = $personnel->getPrenomPerso();
+                            $_SESSION['dateNaissance'] = $personnel->getDateNaissancePerso();
+                            $_SESSION['adresse'] = $personnel->getAdressePerso();
+                            $_SESSION['tel'] = $personnel->getTelPerso();
+                            $_SESSION['mel'] = $personnel->getMelPerso();
+                            header('Location: index.php');
+                        } else {
+                            $errors[] = "Cet utilisateur n'est pas autorisé";
+                        }
                     }
                 }
             }
@@ -121,7 +131,6 @@ class PersonnelCtrl extends MotherCtrl
 
         if(count($errors) > 0) {
             $this->_data['errors'] = $errors;
-            var_dump($errors);
         }
 
         $this->_data['page'] = 'login';
