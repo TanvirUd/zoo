@@ -70,11 +70,9 @@
 
 <!-- formulaire popover pour ajout d'un ouveau rôle applicatif -->
 <div class="container mt-6" id="ajouter" popover>
-  <h3 class="mb-4">Ajouter un nouveau rôle applicatif</h3>
-
+  <h3 class="mb-4 text-center">Ajouter un nouveau rôle applicatif</h3>
   <form action="index.php?controller=role&action=addNewRole" method="POST">
-    <div class="container mt-5">
-
+    <div class="container mt-5 text-center">
       <div class="row mb-3">
         <label for="nomApplication" class="col-form-label col-lg-3 text-start">Nom de l'Application</label>
         <div class="col-lg-4">
@@ -91,25 +89,12 @@
         </div>
       </div>
 
-
       <div class="row mb-3">
-        <label for="roleApplicatif" class="col-form-label col-lg-3 text-start">Rôle Applicatif</label>
+        <label for="nomRole" class="col-sm-3 col-form-label text-start">Saisir le nom du rôle</label>
         <div class="col-lg-4">
-          <select class="form-select" id="roleApplicatif" name="roleApplicatif" required>
-            <option value="" selected disabled>Choisissez un rôle</option>
-            <!-- récupération des données rôles pour le select -->
-            <?php
-            //choix de rôle
-            $roles = ['developpeur', 'stagiaire', 'coordinateur', 'superviseur'];
-            foreach ($roles as $role) {
-              echo "<option value=\"$role\">$role</option>";
-            }
-            ?>
-          </select>
+          <input type="text" class="form-control" id="nomRole" name="nomRole" placeholder="Nom du rôle" required>
         </div>
       </div>
-
-
 
       <div class="row mb-3">
         <label for="bddApplication" class="col-form-label col-lg-3 text-start">Base de Données de l'Application</label>
