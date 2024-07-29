@@ -56,14 +56,17 @@
                 <tr>
                   <th scope="row "><?php echo htmlspecialchars($nomAppli); ?></th>
                   <td>
-                  <select class="form-select" aria-label="Default select example" name="nomAppli">
+                  <select class="form-select" aria-label="Default select example" name="nomAppli:<?=$application->getIdAppli()?>">
+                    
                     <?php
                     if (isset($this->_data['applications']) && is_array($this->_data['applications'])) {
+                        echo "<option value=\"none\">Rien n'est sélectionné</option>";
                         foreach ($applicationData['roleApplicatifs'] as $role) {
                             $roleId = $role->getIdAppli();
                             $roleName = $role->getIdRoleAppli();
                             echo "<option value='" .htmlspecialchars($roleId).":".htmlspecialchars($roleName). "'>" . htmlspecialchars($roleName) . "</option>";
                         }
+                        echo "<option value=\"" .htmlspecialchars($roleId).":delete\">Aucun rôle</option>";
                     } else {
                         echo "<option value=''>Aucun role disponible</option>";
                     }

@@ -35,10 +35,24 @@ class estHabiliteModel extends PdoModel
         }
     }
 
-    public function updateHabilitesPourPersonnel(string $numMatriculePerso) {
+    public function checkHabilitesByMatriculAndIdAppli(string $numMatriculePerso, int $idAppli) {
         try {
-            $sqlQuery="UPDATE estHabilite SET (numMatriculePerso, idAppli, idRoleAppli)
-            VALUES(:numMatriculePerso, :idAppli, :idRoleAppli)";
+            $sqlQuery="SELECT idAppli, idRoleAppli FROM EstHabilite WHERE numMatriculePerso=:numMatriculePerso AND idAppli=:idAppli";
+            $stmt = $this->_db->prepare($sqlQuery);
+            $stmt->bindParam(':numMatriculePerso', $numMatriculePerso, PDO::PARAM_STR);
+            $stmt->bindParam(':idAppli', $idAppli, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result != false;         
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            throw new Exception("Une erreur s'est produite : ".$e->getMessage());
+        }
+    }
+
+    public function updateHabilitesPourPersonnel(string $numMatriculePerso, int $idAppli, string $idRoleAppli) {
+        try {
+            $sqlQuery="UPDATE EstHabilite SET idRoleAppli=:idRoleAppli WHERE numMatriculePerso=:numMatriculePerso AND idAppli=:idAppli";
             $stmt = $this->_db->prepare($sqlQuery);
             $stmt->bindParam(':numMatriculePerso', $numMatriculePerso, PDO::PARAM_STR);
             $stmt->bindParam(':idAppli', $idAppli, PDO::PARAM_INT);
