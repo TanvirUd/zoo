@@ -5,9 +5,9 @@
                 <h2 class="text-center mb-4 mt-4">Définition des droits associés à un rôle</h2>
                 <!-- affichage message d'erreur -->
                 <?php
-                if (isset($error)) {
+                if (isset($errors)) {
                     echo '<div class="alert alert-danger" role="alert">';
-                    echo $error;
+                    echo $errors[0];
                     echo '</div>';
                 }
                 ?>
