@@ -53,7 +53,11 @@ class PersonnelCtrl extends MotherCtrl
 
                 if(count($errors) == 0) {
                     if($personnelModel->createPersonnel()){
-                        header('Location: index.php?controller=personnel&action=connexion');
+                        if(isset($_SESSION) && $_SESSION['matricule'] == "") {
+                            header('Location: index.php?controller=Role&action=affectRole');
+                        }else{
+                            header('Location: index.php?controller=personnel&action=connexion');
+                        }                        
                     }else{
                         $errors[] = "Une erreur est survenue";
                     }
