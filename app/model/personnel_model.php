@@ -3,7 +3,16 @@ require_once("../app/model/pdo_model.php");
 class PersonnelModel extends PdoModel
 {
 
-    //récupérer les personnels par leurs nom complets
+    
+    /**
+     * Retrieves personnel information by full name.
+     *
+     * This function executes a SQL query to select the personnel's number and full name
+     * from the Personnel table. The result is returned as an associative array, where the
+     * key is the personnel's number and the value is the full name.
+     *
+     * @return array An associative array containing personnel information.
+     */
     public function getPersonnelByFullName(): array {
         $sql = "SELECT numMatriculePerso, CONCAT(prenomPerso, ' ', nomPerso) AS fullName FROM Personnel";
         $stmt = $this->_db->prepare($sql);
@@ -11,6 +20,20 @@ class PersonnelModel extends PdoModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
+    /**
+     * Creates a new personnel record in the database.
+     *
+     * This function takes input from a form and creates a new personnel record in the database.
+     * The input includes the personnel's unique identifier, name, date of birth, address,
+     * telephone number, and password. The password is hashed using the password_hash function.
+     * The function generates a unique matricule number consisting of two digits and two letters.
+     * If the generated matricule number already exists in the database, the function repeats
+     * the process until a unique matricule number is found. The function then inserts the
+     * personnel record into the database using a prepared statement. If any error occurs during
+     * the process, the function terminates the script and displays the error message.
+     *
+     * @return bool Returns true if the personnel record is successfully created, false otherwise.
+     */
     public function createPersonnel(){
         $melPerso = strip_tags($_POST['mel_perso_signup']);
         $nomPerso = htmlentities($_POST['nom_perso_signup']);
@@ -52,6 +75,19 @@ class PersonnelModel extends PdoModel
         }
     }
 
+    /**
+     * Creates a new personnel record with the provided information. This function is used only for testing purposes.
+     * Function created for Faker
+     *
+     * @param string $melPerso The personnel's email.
+     * @param string $nomPerso The personnel's last name.
+     * @param string $prenomPerso The personnel's first name.
+     * @param string $dateNaissancePerso The personnel's date of birth.
+     * @param string $adressePerso The personnel's address.
+     * @param string $telPerso The personnel's phone number.
+     * @throws PDOException If there is an error with the database query.
+     * @return bool Returns true if the record is successfully created, false otherwise.
+     */
     public function createPersonnelFaker($melPerso, $nomPerso, $prenomPerso, $dateNaissancePerso, $adressePerso, $telPerso){
         $mdpPerso = password_hash("admin", PASSWORD_DEFAULT); //insérer contenu form
         
@@ -87,6 +123,12 @@ class PersonnelModel extends PdoModel
         }
     }
 
+    /**
+     * Retrieves all personnel records from the database.
+     *
+     * @return array Returns an array of personnel records.
+     * @throws PDOException If there is an error executing the query.
+     */
     public function getAllPersonnel(){
         try{
             $sql = "SELECT * FROM Personnel";
@@ -99,6 +141,13 @@ class PersonnelModel extends PdoModel
         }
     }
 
+    /**
+     * Retrieves a personnel record from the database based on the given personnel number.
+     *
+     * @param string $numMatriculePerso The personnel number to search for.
+     * @return array|false Returns an array representing the personnel record if found, or false if not found.
+     * @throws PDOException If there is an error executing the query.
+     */
     public function getPersonnelByNumMatricule($numMatriculePerso){
 
         try{
@@ -113,6 +162,12 @@ class PersonnelModel extends PdoModel
         }
     }
 
+    /**
+     * Check if a personnel with the given matricule number exists in the database.
+     *
+     * @param string $numMatriculePerso The matricule number to check.
+     * @return bool Returns true if a personnel with the given matricule number exists, false otherwise.
+     */
     public function checkIfMatriculeExist($numMatriculePerso){
         $sql = "SELECT numMatriculePerso FROM Personnel WHERE numMatriculePerso = :numMatriculePerso;";
         $result = $this->_db->prepare($sql);

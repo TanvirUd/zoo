@@ -1,4 +1,4 @@
-<form action="index.php?controller=role&action=affectRole" method="post">
+<form action="index.php?controller=roleApplicatif&action=affectRole" method="post">
   <div class="container min-vh-100 ">
     <div class="row justify-content-center bg-light mt-5">
       <div class="col-md-8">
