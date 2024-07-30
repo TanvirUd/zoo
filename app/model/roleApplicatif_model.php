@@ -47,8 +47,8 @@ class RoleApplicatifModel extends PdoModel
         $mdpRoleAppli = $mdp;
 
         try{
-            $sql = "INSERT INTO RoleApplicatif(idRoleAppli, mdpRoleAppli) 
-            VALUES (:idRoleAppli, :mdpRoleAppli);";
+            $sql = "INSERT INTO RoleApplicatif(idAppli, idRoleAppli, mdpRoleAppli) 
+            VALUES (:idAppli, :idRoleAppli, :mdpRoleAppli);";
             $result = $this->_db->prepare($sql);
             $result->bindParam(":idAppli", $idAppli, PDO::PARAM_INT);
             $result->bindParam(":idRoleAppli", $idRoleAppli, PDO::PARAM_STR);
@@ -59,18 +59,19 @@ class RoleApplicatifModel extends PdoModel
         }
     }
 
-    public function updateRoleApplicatif($idAppli, $nomRole, $mdpRoleAppli) {
-        $idAppli = $_POST['idAppli'];
-        $nomRole = $_POST['nomRole']??""; //insérer contenu form
-        $mdpRoleAppli = $_POST['mdpAppli']??""; //insérer contenu form
+    public function updateRoleApplicatif($idAppli, $roleAppli, $mdpRoleAppli) {
         $flag = false;
         try{
+            if($idAppli != ""){
+                $sql = "UPDATE EstHabilite SET idAppli=:idAppli WHERE idRoleAppli=:roleAppli";
+                $result = $this->_db->prepare($sql);
+                $result->bindParam(":idAppli", $idAppli, PDO::PARAM_INT);
+                $result->bindParam(":roleAppli", $roleAppli, PDO::PARAM_STR);
+                $result->execute();
+            }
             $sql = "UPDATE RoleApplicatif SET ";
-            if($nomRole != ""){
-                if($flag){
-                    $sql .= ", ";
-                }
-                $sql .= "roleAppli=:roleAppli ";
+            if($idAppli != ""){
+                $sql .= "idAppli=:idAppli ";
                 $flag = true;
             }
             if($mdpRoleAppli != ""){
@@ -79,21 +80,15 @@ class RoleApplicatifModel extends PdoModel
                 }
                 $sql .= "mdpRoleAppli=:mdpRoleAppli ";
             }
-            if($idAppli != ""){
-                if($flag){
-                    $sql .= ", ";
-                }
-                $sql .= "idAppli=:idAppli ";
-            }
-            $sql .= "WHERE nomRole=:nomRole";
+            $sql .= "WHERE idRoleAppli=:roleAppli";
             $result = $this->_db->prepare($sql);
+            if($idAppli != ""){
+                $result->bindParam(":idAppli", $idAppli, PDO::PARAM_INT);
+            }
             if($mdpRoleAppli != ""){
-                $result->bindParam(":mdpPerso", $mdpRoleAppli, PDO::PARAM_STR);
+                $result->bindParam(":mdpRoleAppli", $mdpRoleAppli, PDO::PARAM_STR);
             }
-            if($nomRole != ""){
-                $result->bindParam(":idAppli", $idAppli, PDO::PARAM_STR);
-            }
-            $result->bindParam(":nomRole", $nomRole, PDO::PARAM_STR);
+            $result->bindParam(":roleAppli", $roleAppli, PDO::PARAM_STR);
             return $result->execute();
         } catch (PDOException $e){
             die('Erreur : '. $e->getMessage());
