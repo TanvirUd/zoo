@@ -158,12 +158,10 @@ class RoleApplicatifCtrl extends MotherCtrl
         $nomRole = trim(htmlspecialchars($_POST['nomRole'] ?? ""));
         $mdpRoleAppli = trim(htmlspecialchars($_POST['mdpAppli'] ?? ""));
         if (!empty($idAppli) && !empty($nomRole) && !empty($mdpRoleAppli)) {
-            var_dump($idAppli);
-            die();
             require_once("../app/model/roleApplicatif_model.php");
             $roleModel = new RoleApplicatifModel();
             try {
-                $roleModel->createRoleApplicatif($idAppli, $nomRole, $mdpRoleAppli);
+                $roleModel->createRoleApplicatif(intval($idAppli), $nomRole, $mdpRoleAppli);
                 header("Location: index.php");
                 exit;
             } catch (Exception $e) {
@@ -172,6 +170,30 @@ class RoleApplicatifCtrl extends MotherCtrl
         } else {
             echo "Erreur : Merci de remplir tous les champs.";
         }
+    }
+
+
+    public function updateRole()
+    {
+        $idAppli = intval($_POST['idAppli']);
+        $roleAppli = trim(htmlspecialchars($_POST['roleAppli'] ?? ""));
+        $mdpRoleAppli = trim(htmlspecialchars($_POST['mdpAppli'] ?? ""));
+        var_dump($idAppli, $roleAppli, $mdpRoleAppli);
+        if (!empty($roleAppli)) {
+            require_once("../app/model/roleApplicatif_model.php");
+            $roleModel = new RoleApplicatifModel();
+            try {
+                $roleModel->updateRoleApplicatif($idAppli, $roleAppli, $mdpRoleAppli);
+                header("Location: index.php");
+                exit;
+            } catch (Exception $e) {
+                echo "Erreur : " . $e->getMessage();
+            }
+        } else {
+            echo "Erreur : Merci de remplir tous les champs.";
+        }
+
+
     }
 
 
@@ -199,6 +221,8 @@ class RoleApplicatifCtrl extends MotherCtrl
                 throw new Exception("Suppression échouée");
             }
         } catch (Exception $e) {
+            var_dump($e->getMessage());
+            die;
             error_log($e->getMessage());
             header("Location: index.php?controller=error&action=error_404");
             exit;
