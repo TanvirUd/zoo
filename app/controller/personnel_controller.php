@@ -152,6 +152,8 @@ class PersonnelCtrl extends MotherCtrl
                             $_SESSION['adresse'] = $personnel->getAdressePerso();
                             $_SESSION['tel'] = $personnel->getTelPerso();
                             $_SESSION['mel'] = $personnel->getMelPerso();
+                            session_start();
+                            $_SESSION['login_success'] = true;
                             header('Location: index.php');
                         } else {
                             $errors[] = "Cet utilisateur n'est pas autorisé";
