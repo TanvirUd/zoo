@@ -57,9 +57,7 @@
                       <td><?php echo $appDb; ?></td>
                       <td>
                         <div class="d-flex">
-                        <form method="post" action="index.php?controller=RoleApplicatif&action=update">
-                          <button class="btn btn-primary fw-bold" popovertarget="changer" type="button" onclick="setRoleName('<?php echo $roleName; ?>')">Modifier</button>
-                        </form>
+                          <button class="btn btn-primary fw-bold" id="<?=$roleName?>" popovertarget="changer" type="button" onclick="setRoleName(this.id)">Modifier</button>
                         <form method="post" action="index.php?controller=RoleApplicatif&action=deleteRole">
                           <input type="hidden" name="roleName" value="<?php echo $roleName; ?>">
                           <button class="btn btn-danger fw-bold" type="submit">Supprimer</button>
@@ -91,14 +89,19 @@
           <select class="form-select" id="idAppli" name="idAppli" required>
             <option value="" selected disabled>Choisissez une application et un rôle</option>
             <?php if (isset($roleApplicatifs) && is_array($roleApplicatifs)): ?>
+                  <?php $tempTable = array(); ?>
                   <?php foreach ($roleApplicatifs as $applicationData): ?>
                       <?php
                           $roleName = $applicationData['roleApplicatifs']->getIdRoleAppli();
                           $dbName = $applicationData['application']->getNomAppli();
                           $roleId = $applicationData['roleApplicatifs']->getIdAppli();
+
+                          $tempTable[$roleId] = $dbName;
                       ?>
-                      <option value="<?php echo $roleId; ?>">
-                          <?php echo $dbName; ?> - <?php echo $roleName; ?>
+                  <?php endforeach; ?>
+                  <?php foreach (array_unique($tempTable) as $key => $value): ?>
+                      <option value="<?= $key ?>">
+                          <?= $value; ?>
                       </option>
                   <?php endforeach; ?>
               <?php endif; ?>
@@ -133,12 +136,12 @@
 <!-- formulaire popover pour ajout d'un ouveau rôle applicatif -->
 <div class="container mt-6" id="changer" popover>
   <h3 class="mb-4 text-center">Modifier le rôle</h3>
-  <form action="index.php?controller=roleApplicatif&action=createRole" method="POST">
+  <form action="index.php?controller=roleApplicatif&action=updateRole" method="POST">
     <div class="container mt-5 text-center">
         <div class="row mb-3">
-          <label for="nomRole" class="col-sm-3 col-form-label text-start">Nom du rôle</label>
+          <label for="roleAppli" class="col-sm-3 col-form-label text-start">Nom du rôle</label>
           <div class="col-lg-4">
-          <input type="text" class="form-control" id="nomRole" name="nomRole" value="<?php echo $roleName; ?>" readonly>
+          <input type="text" class="form-control" id="roleAppli" name="roleAppli" value="" readonly>
           </div>
         </div>
 
@@ -148,14 +151,20 @@
           <select class="form-select" id="idAppli" name="idAppli" required>
             <option value="" selected disabled>Choisissez une application et un rôle</option>
             <?php if (isset($roleApplicatifs) && is_array($roleApplicatifs)): ?>
+                  <?php $tempTable = array(); ?>
                   <?php foreach ($roleApplicatifs as $applicationData): ?>
                       <?php
                           $roleName = $applicationData['roleApplicatifs']->getIdRoleAppli();
                           $dbName = $applicationData['application']->getNomAppli();
                           $roleId = $applicationData['roleApplicatifs']->getIdAppli();
+
+                          $tempTable[$roleId] = $dbName;
                       ?>
-                      <option value="<?php echo $roleId; ?>">
-                          <?php echo $dbName; ?>
+                      ?>
+                  <?php endforeach; ?>
+                  <?php foreach (array_unique($tempTable) as $key => $value): ?>
+                      <option value="<?= $key ?>">
+                          <?= $value; ?>
                       </option>
                   <?php endforeach; ?>
               <?php endif; ?>
@@ -181,6 +190,6 @@
 
 <script>
 function setRoleName(roleName) {
-  document.getElementById('nomRole').value = roleName;
+  document.getElementById('roleAppli').value = roleName;
 }
 </script>
