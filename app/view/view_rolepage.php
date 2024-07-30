@@ -13,29 +13,30 @@
         ?>
 
         <div class="row mb-3">
-          <div class="col-md-6 col-sm-12">
-            <div class="input-group">
-              <label for="search" class="input-group-text">Chercher</label>
-              <input type="search" class="form-control" id="search" placeholder="Rechercher un rôle...">
-            </div>
-          </div>
+         
+        </div> 
 
           <div class="text-center col mb-3">
             <button class="btn btn-primary fw-bold" type="button" popovertarget="ajouter">+ Ajouter</button>
           </div>
         </div>
 
-        <div class="table-responsive table-responsive-md">
+        <div class="table-responsive table-responsive-md"  >
           <!-- tableau -->
-          <table class="table table-striped table-hover">
+          <table class="table table-striped table-hover" id="rolesTable" 
+                                                        data-toggle="table"
+                                                        data-search="true"
+                                                        data-show-columns="true"
+                                                        data-pagination="true"
+                                                        data-locale="fr-FR">
             <!-- entête du tableau -->
             <thead>
               <tr>
                 <!-- noms des colonnes -->
-                <th>Identifiant du rôle applicatif</th>
-                <th>Nom de l'application</th>
-                <th>BDD de l'application</th>
-                <th>Action</th>
+                <th data-sortable="true">Identifiant du rôle applicatif</th>
+                <th data-sortable="true">Nom de l'application</th>
+                <th data-sortable="true">BDD de l'application</th>
+                <th data-sortable="true">Action</th>
               </tr>
             </thead>
             <!-- ELEMENTS A DYNAMISER -->
@@ -183,4 +184,19 @@
 function setRoleName(roleName) {
   document.getElementById('nomRole').value = roleName;
 }
+
+$(function() {
+    $('#rolesTable').bootstrapTable({
+        locale: 'fr-FR',
+        search: true,
+        searchAlign: 'left',
+        showColumns: true,
+        showColumnsToggleAll: true,
+        pagination: true,
+        pageSize: 10,
+        pageList: [10, 25, 50, 100, 'all']
+    });
+});
+
 </script>
+
