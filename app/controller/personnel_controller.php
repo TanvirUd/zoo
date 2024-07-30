@@ -159,6 +159,7 @@ class PersonnelCtrl extends MotherCtrl
                             $_SESSION['tel'] = $personnel->getTelPerso();
                             $_SESSION['mel'] = $personnel->getMelPerso();
                             $_SESSION['admin'] = true;
+                            $_SESSION['login_success'] = true;
                             header('Location: index.php');
                         } elseif ($estHabiliteModel->checkHabilite($personnel->getNumMatriculePerso(), $appli)) {
                             $_SESSION['matricule'] = $personnel->getNumMatriculePerso();
