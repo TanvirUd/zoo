@@ -30,11 +30,11 @@ class estHabiliteModel extends PdoModel
      */
     public function getHabilitesByMatricule(string $numMatriculePerso) {
         try {
-            $sqlQuery="SELECT estHabilite.idAppli, estHabilite.idRoleAppli, roleApplicatif.mdpRoleAppli 
-                        FROM EstHabilite INNER JOIN roleApplicatif 
-                        ON estHabilite.idAppli = roleApplicatif.idAppli 
-                        AND estHabilite.idRoleAppli = roleApplicatif.idRoleAppli
-                        WHERE estHabilite.numMatriculePerso=:numMatriculePerso";
+            $sqlQuery="SELECT EstHabilite.idAppli, EstHabilite.idRoleAppli, RoleApplicatif.mdpRoleAppli 
+                        FROM EstHabilite INNER JOIN RoleApplicatif 
+                        ON EstHabilite.idAppli = RoleApplicatif.idAppli 
+                        AND EstHabilite.idRoleAppli = RoleApplicatif.idRoleAppli
+                        WHERE EstHabilite.numMatriculePerso = :numMatriculePerso";
             $stmt = $this->_db->prepare($sqlQuery);
             $stmt->bindParam(':numMatriculePerso', $numMatriculePerso, PDO::PARAM_STR);
             $stmt->execute();
@@ -44,7 +44,27 @@ class estHabiliteModel extends PdoModel
 
         } catch (PDOException $e) {
             error_log($e->getMessage());
-            throw new Exception("Une erreur s'est produite");
+            throw new Exception("Une erreur s'est produite : ".$e->getMessage());
+        }
+    }
+
+    public function getHabilitesByMatriculeAndIdAppli(string $numMatriculePerso, int $idAppli) {
+        try {
+            $sqlQuery="SELECT EstHabilite.idAppli, EstHabilite.idRoleAppli, RoleApplicatif.mdpRoleAppli 
+                        FROM EstHabilite INNER JOIN RoleApplicatif 
+                        ON EstHabilite.idAppli = RoleApplicatif.idAppli 
+                        AND EstHabilite.idRoleAppli = RoleApplicatif.idRoleAppli
+                        WHERE EstHabilite.numMatriculePerso = :numMatriculePerso AND EstHabilite.idAppli = :idAppli";
+            $stmt = $this->_db->prepare($sqlQuery);
+            $stmt->bindParam(':numMatriculePerso', $numMatriculePerso, PDO::PARAM_STR);
+            $stmt->bindParam(':idAppli', $idAppli, PDO::PARAM_INT);
+            $stmt->execute();
+
+            //retourner tous les résultats
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            throw new Exception("Une erreur s'est produite : ".$e->getMessage());
         }
     }
 
@@ -83,6 +103,21 @@ class estHabiliteModel extends PdoModel
             $sqlQuery="SELECT idAppli FROM EstHabilite WHERE numMatriculePerso=:numMatriculePerso AND idRoleAppli='bdauthentification'";
             $stmt = $this->_db->prepare($sqlQuery);
             $stmt->bindParam(':numMatriculePerso', $numMatriculePerso, PDO::PARAM_STR);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result != false;         
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            throw new Exception("Une erreur s'est produite : ".$e->getMessage());
+        }
+    }
+
+    public function checkHabilite(string $numMatriculePerso, int $idAppli){
+        try {
+            $sqlQuery="SELECT idAppli, idRoleAppli FROM EstHabilite WHERE numMatriculePerso=:numMatriculePerso AND idAppli=:idAppli";
+            $stmt = $this->_db->prepare($sqlQuery);
+            $stmt->bindParam(':numMatriculePerso', $numMatriculePerso, PDO::PARAM_STR);
+            $stmt->bindParam(':idAppli', $idAppli, PDO::PARAM_INT);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             return $result != false;         

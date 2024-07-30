@@ -161,7 +161,18 @@ class RoleApplicatifCtrl extends MotherCtrl
             require_once("../app/model/roleApplicatif_model.php");
             $roleModel = new RoleApplicatifModel();
             try {
-                $roleModel->createRoleApplicatif(intval($idAppli), $nomRole, $mdpRoleAppli);
+                require_once("../app/model/application_model.php");
+                $appliModel = new ApplicationModel();
+                $application = $appliModel->getApplicationById($idAppli);
+
+                require_once("../app/entity/application_entity.php");
+                $appliEntity = new Application();
+                $appliEntity->hydrate($application);
+
+                if ($roleModel->createRoleApplicatif(intval($idAppli), $nomRole, $mdpRoleAppli)){
+                    $roleModel->createRoleLoginOnDb($nomRole, $mdpRoleAppli, $appliEntity->getDbAppli());                     
+                }
+
                 header("Location: index.php");
                 exit;
             } catch (Exception $e) {

@@ -6,9 +6,13 @@ session_start();
 $userIsLoggedIn = false;
 if (isset($_SESSION['matricule'])) {
     $userIsLoggedIn = true;
-    $strCtrl    = $_GET['controller']??'home';
-    $strMethod  = $_GET['action']??'homepage';
-
+    if (isset($_SESSION['admin']) && $_SESSION['admin']) {
+        $strCtrl    = $_GET['controller']??'home';
+        $strMethod  = $_GET['action']??'homepage';        
+    }else{
+        $strCtrl    = $_GET['controller']??'application';
+        $strMethod  = $_GET['action']??'application';
+    }
 } else {
     $strCtrl    = isset($_GET['controller']) && $_GET['controller'] == 'faker' ? 'faker' : 'personnel';
     $strMethod  = isset($_GET['controller']) && $_GET['controller'] == 'faker' ? $_GET['action'] : 'connexion';

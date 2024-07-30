@@ -25,6 +25,15 @@
           <input type="password" class="form-control" id="mdpPerso" name="mdpPerso" placeholder="Saisir votre mot de passe" value="<?= htmlspecialchars($mdp) ?>" required>
         </div>
 
+        <div class="form-check p-0 mb-3">
+          <label for="application">Choisir l'application</label>
+          <select class="form-select" id="application" name="application" required>
+          <?php foreach($applications as $application) :?>
+            <option value="<?= $application->getIdAppli()?>"><?= $application->getNomAppli() ?></option>
+          <?php endforeach; ?>
+          </select>
+        </div>
+
         <div class="d-grid">
           <button type="submit" class="btn btn-primary">Connexion</button>
         </div>
