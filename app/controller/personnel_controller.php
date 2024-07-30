@@ -109,8 +109,9 @@ class PersonnelCtrl extends MotherCtrl
         $this->_data['title'] = 'login';
         $errors = array();
 
-        $email = $_POST['melPerso']??'';
-        $mdp = $_POST['mdpPerso']??'';
+        $email = filter_var($_POST['melPerso']??'', FILTER_SANITIZE_EMAIL);
+        $mdp = filter_var($_POST['mdpPerso']??'');
+        $appli = intval($_POST['application']??0);
 
         $this->_data['email'] = $email;
         $this->_data['mdp'] = $mdp;
@@ -132,19 +133,24 @@ class PersonnelCtrl extends MotherCtrl
                 }
 
                 if(count($errors) == 0) {
-                    require_once("../app/model/estHabilite_model.php");
-                    $estHabiliteModel = new EstHabiliteModel();
-                }
-
-                if(count($errors) == 0) {
                     $user = $personnelModel->connectPersonnel();
                     if($user) {
-                        require_once("../app/entity/personnel_entity.php");
                         require_once("../app/model/estHabilite_model.php");
+                        require_once("../app/entity/personnel_entity.php");
+                        require_once("../app/model/application_model.php");
+                        require_once("../app/entity/application_entity.php");
+
+                        $estHabiliteModel = new EstHabiliteModel();
+                        $applicationModel = new ApplicationModel();
+
+                        $application = $applicationModel->getApplicationById($appli);
+                        $applicationEntity = new Application();
+                        $applicationEntity->hydrate($application);
+
                         $personnel = new Personnel();
                         $personnel->hydrate($user);
 
-                        if ($estHabiliteModel->checkIfAdmin($personnel->getNumMatriculePerso())) {
+                        if ($estHabiliteModel->checkIfAdmin($personnel->getNumMatriculePerso()) && $applicationEntity->getDbAppli() == "BdAuthentification") {
                             $_SESSION['matricule'] = $personnel->getNumMatriculePerso();
                             $_SESSION['nom'] = $personnel->getNomPerso();
                             $_SESSION['prenom'] = $personnel->getPrenomPerso();
@@ -152,7 +158,18 @@ class PersonnelCtrl extends MotherCtrl
                             $_SESSION['adresse'] = $personnel->getAdressePerso();
                             $_SESSION['tel'] = $personnel->getTelPerso();
                             $_SESSION['mel'] = $personnel->getMelPerso();
+                            $_SESSION['admin'] = true;
                             header('Location: index.php');
+                        } elseif ($estHabiliteModel->checkHabilite($personnel->getNumMatriculePerso(), $appli)) {
+                            $_SESSION['matricule'] = $personnel->getNumMatriculePerso();
+                            $_SESSION['nom'] = $personnel->getNomPerso();
+                            $_SESSION['prenom'] = $personnel->getPrenomPerso();
+                            $_SESSION['dateNaissance'] = $personnel->getDateNaissancePerso();
+                            $_SESSION['adresse'] = $personnel->getAdressePerso();
+                            $_SESSION['tel'] = $personnel->getTelPerso();
+                            $_SESSION['mel'] = $personnel->getMelPerso();
+
+                            header('Location: index.php?controller=application&action=application&appli=' . $appli);
                         } else {
                             $errors[] = "Cet utilisateur n'est pas autorisé";
                         }
@@ -161,6 +178,25 @@ class PersonnelCtrl extends MotherCtrl
             }
 
         }
+
+        
+        require_once("../app/model/application_model.php");
+        require_once("../app/entity/application_entity.php");
+
+        $applicationModel = new ApplicationModel();
+        $applicationEntity = new Application();
+
+        $applications = $applicationModel->getAllApplication();
+        $tempTable = array();
+
+        foreach($applications as $application) {
+            $applicationEntity = new Application();
+            $applicationEntity->hydrate($application);
+
+            $tempTable[] = $applicationEntity;
+        }
+
+        $this->_data['applications'] = $tempTable;
 
         if(count($errors) > 0) {
             $this->_data['errors'] = $errors;

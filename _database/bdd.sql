@@ -12,6 +12,8 @@
   DROP DATABASE IF EXISTS BdAuthentification;
   CREATE DATABASE IF NOT EXISTS BdAuthentification CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci;
   GRANT ALL PRIVILEGES ON BdAuthentification.* TO bdauthentification@localhost;
+  GRANT CREATE USER ON *.* TO bdauthentification@localhost;
+  GRANT GRANT OPTION ON *.* TO bdauthentification@localhost;
   FLUSH PRIVILEGES;
 
 /* Utiliser la base de donnée BdAuthentification */

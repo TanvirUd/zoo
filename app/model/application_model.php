@@ -60,6 +60,20 @@ class ApplicationModel extends PDOModel
         }
     }
 
+    public function checkApplicationById($idAppli)
+    {
+        try {
+            $sql = "SELECT nomAppli FROM Application WHERE idAppli = :idAppli";
+            $stmt = $this->_db->prepare($sql);
+            $stmt->bindParam(':idAppli', $idAppli, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetch();
+            return $result != false;
+        } catch (PDOException $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+    }
+
     /**
      * Creates a new application in the database.
      *
@@ -80,5 +94,18 @@ class ApplicationModel extends PDOModel
             die('Erreur : ' . $e->getMessage());
         }
     }
-    
+
+    public function connectDbApplication($id, $mdp, $dbAppli)
+    {
+        try {
+            $this->appUser($id, $mdp, $dbAppli);
+            $sql = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = :dbAppli";
+            $stmt = $this->_dbApp->prepare($sql);
+            $stmt->bindParam(':dbAppli', $dbAppli, PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            throw new Exception('Erreur : ' . $e->getMessage());
+        }
+    }    
 }

@@ -41,6 +41,20 @@ class RoleApplicatifModel extends PdoModel
         }
     }
 
+    public function getRolesByUserAndAppliId($idAppli, $numMatriculePerso) {
+        try{
+            $sql = "SELECT * FROM RoleApplicatif WHERE idAppli=:idAppli AND numMatriculePerso=:numMatriculePerso";
+            $result = $this->_db->prepare($sql);
+            $result->bindParam(":idAppli", $idAppli, PDO::PARAM_INT);
+            $result->bindParam(":numMatriculePerso", $numMatriculePerso, PDO::PARAM_STR);
+            $result->execute();
+            $role = $result->fetchAll();
+            return $role;
+        } catch (PDOException $e){
+            die('Erreur : '. $e->getMessage());
+        }
+    }
+
     public function createRoleApplicatif($id, $roleAppli, $mdp) {
         $idAppli = $id; // en référence à idAppli de Application
         $idRoleAppli = $roleAppli;
@@ -54,6 +68,18 @@ class RoleApplicatifModel extends PdoModel
             $result->bindParam(":idRoleAppli", $idRoleAppli, PDO::PARAM_STR);
             $result->bindParam(":mdpRoleAppli", $mdpRoleAppli, PDO::PARAM_STR);
             return $result->execute();
+        } catch (PDOException $e){
+            die('Erreur : '. $e->getMessage());
+        }
+    }
+
+    public function createRoleLoginOnDb($id,  $mdp, $nomDb) {
+        try{
+            $sql1 = "CREATE USER " . $this->_db->quote($id) . "@" . $_ENV['DBHOST'] . " IDENTIFIED BY ".$this->_db->quote($mdp).";";
+            var_dump($sql1);
+            $result = $this->_db->prepare($sql1);
+            $result->execute();    
+            return true;
         } catch (PDOException $e){
             die('Erreur : '. $e->getMessage());
         }

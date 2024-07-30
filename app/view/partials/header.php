@@ -26,7 +26,7 @@
                     // Récupère l'URL actuelle
                     $currentUrl = basename($_SERVER['REQUEST_URI']);
                     ?>
-                    <?php if (isset($_SESSION['matricule'])) : ?>
+                    <?php if (isset($_SESSION['matricule']) && isset($_SESSION['admin']) && $_SESSION['admin']) : ?>
                         <a class="nav-link <?= $currentUrl == 'index.php' ? 'active' : '' ?>" aria-current="page" href="index.php">Gestion des rôles</a>
                         <a class="nav-link <?= $currentUrl == 'index.php?controller=roleApplicatif&action=permissions' ? 'active' : '' ?>" href="index.php?controller=roleApplicatif&action=permissions">Définition des droits</a>
                         <a class="nav-link <?= $currentUrl == 'index.php?controller=roleApplicatif&action=affectRole' ? 'active' : '' ?>" href="index.php?controller=roleApplicatif&action=affectRole">Affectation des rôles</a>
